@@ -1,0 +1,823 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>快速上手 · KEditor</title>
+<meta name="description" content="KEditor 快速上手指南：安装、三种接入方式、常用配置、上传（整包 + 分片）、Markdown 导入、代码块高亮、保存与回填。">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='8' fill='%2307c160'/%3E%3Ctext x='16' y='23' font-size='19' font-family='Helvetica,sans-serif' font-weight='700' fill='%23fff' text-anchor='middle'%3EK%3C/text%3E%3C/svg%3E">
+<link rel="stylesheet" href="assets/css/base.css">
+<link rel="stylesheet" href="assets/css/docs.css">
+</head>
+<body>
+
+<header class="site-header">
+  <div class="container site-header__inner">
+    <a class="brand" href="index.html">
+      <svg class="brand__logo" viewBox="0 0 32 32" aria-hidden="true">
+        <defs>
+          <linearGradient id="kg" x1="0" y1="0" x2="32" y2="32">
+            <stop offset="0" stop-color="#28d17c"></stop>
+            <stop offset="1" stop-color="#05a250"></stop>
+          </linearGradient>
+        </defs>
+        <rect width="32" height="32" rx="9" fill="url(#kg)"></rect>
+        <path d="M11 8.5v15M11 16.2l7.2-7.7M11 15.6l7.6 7.9" stroke="#fff" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" fill="none"></path>
+      </svg>
+      KEditor
+      <span class="brand__ver">v1.0.8</span>
+    </a>
+
+    <nav class="nav">
+      <a class="nav__link" href="index.html">首页</a>
+      <a class="nav__link is-active" href="guide.html">快速上手</a>
+      <a class="nav__link" href="api.html">API 参考</a>
+      <a class="nav__link" href="playground.html">在线试用</a>
+    </nav>
+
+    <div class="site-header__actions">
+      <a class="icon-link" href="https://github.com/kyle-xiaoku/kyle-editor" target="_blank" rel="noopener noreferrer" title="GitHub" aria-label="GitHub">
+        <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 .5A11.5 11.5 0 0 0 .5 12a11.5 11.5 0 0 0 7.86 10.92c.58.1.79-.25.79-.56v-2c-3.2.7-3.88-1.37-3.88-1.37-.53-1.34-1.3-1.7-1.3-1.7-1.06-.72.08-.7.08-.7 1.17.08 1.79 1.2 1.79 1.2 1.04 1.79 2.73 1.27 3.4.97.1-.75.4-1.27.74-1.56-2.55-.29-5.24-1.28-5.24-5.7 0-1.26.45-2.29 1.19-3.1-.12-.29-.52-1.46.11-3.05 0 0 .97-.31 3.18 1.18a11 11 0 0 1 5.8 0c2.2-1.49 3.17-1.18 3.17-1.18.63 1.59.23 2.76.12 3.05.74.81 1.18 1.84 1.18 3.1 0 4.43-2.69 5.4-5.25 5.69.41.36.78 1.06.78 2.14v3.17c0 .31.21.67.8.56A11.5 11.5 0 0 0 23.5 12 11.5 11.5 0 0 0 12 .5Z"></path></svg>
+      </a>
+      <a class="icon-link" href="https://www.npmjs.com/package/kyle-editor" target="_blank" rel="noopener noreferrer" title="npm" aria-label="npm">
+        <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M1.5 5h21v12.2h-10.4V19H7.6v-1.8H1.5V5Zm1.9 1.9v8.4h3.3V8.8h1.8v6.5h1.6V6.9H3.4Zm8.5 0v8.4h1.9V8.8h1.6v6.5h2.4V6.9h-5.9Zm7.2 0v8.4h1.6V8.8h1.5v6.5h1.7V6.9h-4.8Z"></path></svg>
+      </a>
+      <button class="nav-toggle" type="button" aria-expanded="false" aria-controls="site-drawer" aria-label="打开菜单">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><path d="M4 7h16M4 12h16M4 17h16"></path></svg>
+      </button>
+    </div>
+  </div>
+</header>
+
+<nav class="drawer" id="site-drawer" aria-label="移动端导航">
+  <a class="drawer__link" href="index.html">首页</a>
+  <a class="drawer__link is-active" href="guide.html">快速上手</a>
+  <a class="drawer__link" href="api.html">API 参考</a>
+  <a class="drawer__link" href="playground.html">在线试用</a>
+  <a class="drawer__link" href="https://github.com/kyle-xiaoku/kyle-editor" target="_blank" rel="noopener noreferrer">GitHub</a>
+</nav>
+
+<!-- ========================================================== 页面头部 -->
+<section class="doc-hero">
+  <div class="container doc-hero__inner">
+    <div class="doc-hero__crumbs">
+      <a href="index.html">首页</a>
+      <span>/</span>
+      <span>快速上手</span>
+    </div>
+    <h1>快速上手</h1>
+    <p>从安装到跑起来只要几分钟。本页覆盖三种接入方式、常用配置、上传（整包 + 分片）、Markdown 导入、代码块高亮，以及保存与数据回填。</p>
+  </div>
+</section>
+
+<div class="container">
+  <div class="docs-layout docs-layout--with-outline">
+
+    <!-- 桌面端侧边栏 -->
+    <aside class="doc-aside">
+      <nav class="doc-nav" aria-label="文档目录">
+        <div class="doc-nav__group">
+          <div class="doc-nav__title">入门</div>
+          <ul>
+            <li><a href="#intro">它是什么</a></li>
+            <li><a href="#install">安装</a></li>
+            <li><a href="#quickstart">快速开始</a></li>
+          </ul>
+        </div>
+        <div class="doc-nav__group">
+          <div class="doc-nav__title">配置</div>
+          <ul>
+            <li><a href="#options">常用配置</a></li>
+            <li><a href="#upload">上传：整包与分片</a></li>
+            <li><a href="#markdown">导入 Markdown</a></li>
+            <li><a href="#code">代码块与高亮</a></li>
+            <li><a href="#style">版心与高度</a></li>
+          </ul>
+        </div>
+        <div class="doc-nav__group">
+          <div class="doc-nav__title">进阶</div>
+          <ul>
+            <li><a href="#custom">自定义按钮</a></li>
+            <li><a href="#save">保存与回填</a></li>
+            <li><a href="#security">安全</a></li>
+            <li><a href="#next">下一步</a></li>
+          </ul>
+        </div>
+      </nav>
+    </aside>
+
+    <!-- 移动端横向导航 -->
+    <div class="doc-aside__mobile"><nav id="doc-mobile-nav" aria-label="文档目录（移动端）"></nav></div>
+
+    <article class="doc-body">
+
+      <!-- ------------------------------------------------------------ -->
+      <h2 id="intro">它是什么</h2>
+
+      <p>KEditor 是一个<strong>纯前端的微信公众号风格富文本编辑器</strong>。它不依赖任何后端，也不依赖任何运行时库：图片与视频走上传（整包 + 分片），代码块可选 20 种语言并语法高亮，Markdown 文件/文本可一键导入转成可编辑 HTML，随时能切到 HTML 源码模式查看或改写产物。</p>
+
+      <div class="doc-cards">
+        <a class="doc-card" href="#quickstart">
+          <h4>零构建可用</h4>
+          <p>一个 <code>&lt;script&gt;</code> 标签即可，全局变量 <code>KEditor</code>。</p>
+        </a>
+        <a class="doc-card" href="#upload">
+          <h4>上传两条链路</h4>
+          <p>普通上传与分片上传各自独立配置，只配一条也不会被 mock 顶上。</p>
+        </a>
+        <a class="doc-card" href="#markdown">
+          <h4>Markdown 导入</h4>
+          <p>选文件、拖文件或粘文本，实时预览后三种落点导入。</p>
+        </a>
+      </div>
+
+      <div class="callout callout--tip">
+        <svg class="callout__icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 3l7.5 3.4v5.2c0 4.4-3 8-7.5 9.4-4.5-1.4-7.5-5-7.5-9.4V6.4L12 3Z"></path><path d="M9 12.2l2.2 2.2L15.5 10"></path></svg>
+        <p><strong>样式随 JS 注入，不需要额外引入 CSS。</strong>Vue 是可选 peerDependency —— 只用核心 API 的项目不会被强制安装 Vue。</p>
+      </div>
+
+      <!-- ------------------------------------------------------------ -->
+      <h2 id="install">安装</h2>
+
+      <p>用包管理器，或者直接用 CDN。两条路都不需要构建步骤。</p>
+
+      <div class="code-block">
+        <div class="code-block__head">
+          <span>npm / pnpm / yarn</span>
+          <button class="copy-btn" type="button">复制</button>
+        </div>
+<pre><code>npm install kyle-editor
+
+# 使用 Vue 组件的项目，再把 Vue 显式装上
+npm install kyle-editor vue@^3</code></pre>
+      </div>
+
+      <div class="code-block">
+        <div class="code-block__head">
+          <span>CDN（无需安装）</span>
+          <button class="copy-btn" type="button">复制</button>
+        </div>
+<pre><code>&lt;!-- unpkg / jsdelivr 的默认入口就是压缩版，下面两种写法等价 --&gt;
+&lt;script src="https://unpkg.com/kyle-editor"&gt;&lt;/script&gt;
+&lt;script src="https://unpkg.com/kyle-editor/dist/keditor.umd.min.js"&gt;&lt;/script&gt;</code></pre>
+      </div>
+
+      <div class="table-wrap">
+        <table class="data">
+          <thead>
+            <tr><th>产物</th><th>用途</th><th>体积</th></tr>
+          </thead>
+          <tbody>
+            <tr><td><code>keditor.umd.min.js</code></td><td>CDN / <code>&lt;script&gt;</code> 默认入口</td><td>192 KB / gzip 61 KB</td></tr>
+            <tr><td><code>keditor.umd.js</code></td><td>同上但未压缩，便于断点调试</td><td>300 KB / gzip 78 KB</td></tr>
+            <tr><td><code>keditor.es.js</code></td><td>ESM，打包器走这个</td><td>288 KB</td></tr>
+            <tr><td><code>keditor.cjs</code></td><td>CommonJS</td><td>288 KB</td></tr>
+            <tr><td><code>keditor-vue.*.js</code></td><td>Vue 组件 / 插件，外部化 vue 与本包</td><td>各约 4 KB</td></tr>
+          </tbody>
+        </table>
+      </div>
+
+      <p class="tabs__note">两份 UMD 产物由同一入口分别构建，全局变量都是 <code>window.KEditor</code>，API 完全一致 —— 调试时换未压缩版不会改变行为。</p>
+
+      <!-- ------------------------------------------------------------ -->
+      <h2 id="quickstart">快速开始</h2>
+
+      <p>准备一个挂载点，然后创建实例。下面三种方式任选其一。</p>
+
+      <h3>方式一：<code>&lt;script&gt;</code> 引入（零构建）</h3>
+
+      <div class="code-block">
+        <div class="code-block__head">
+          <span>index.html</span>
+          <button class="copy-btn" type="button">复制</button>
+        </div>
+<pre><code>&lt;div id="editor"&gt;&lt;/div&gt;
+&lt;script src="https://unpkg.com/kyle-editor/dist/keditor.umd.min.js"&gt;&lt;/script&gt;
+&lt;script&gt;
+  const editor = KEditor.create('#editor', {
+    placeholder: '开始撰写内容，支持拖拽 / 粘贴图片与视频…',
+    // 高度默认随内容自动撑开；想要固定高度 + 内部滚动就写上 height: 460
+  })
+
+  editor.on('change', ({ html }) =&gt; console.log(html))
+&lt;/script&gt;</code></pre>
+      </div>
+
+      <p class="tabs__note">本地开发时把 <code>src</code> 换成相对路径 <code>dist/keditor.umd.min.js</code> 即可。</p>
+
+      <h3>方式二：ESM / 打包器</h3>
+
+      <div class="code-block">
+        <div class="code-block__head">
+          <span>Vite / Webpack / Rollup</span>
+          <button class="copy-btn" type="button">复制</button>
+        </div>
+<pre><code>import KEditor from 'kyle-editor'
+
+const editor = KEditor.create('#editor')  // 高度默认自适应内容</code></pre>
+      </div>
+
+      <h3>方式三：Vue 3 安装集成</h3>
+
+      <div class="code-block">
+        <div class="code-block__head">
+          <span>main.js</span>
+          <button class="copy-btn" type="button">复制</button>
+        </div>
+<pre><code>import { createApp } from 'vue'
+import KEditorVue from 'kyle-editor/vue'
+
+createApp(App).use(KEditorVue).mount('#app')</code></pre>
+      </div>
+
+      <div class="code-block">
+        <div class="code-block__head">
+          <span>组件用法</span>
+          <button class="copy-btn" type="button">复制</button>
+        </div>
+<pre><code>&lt;template&gt;
+  &lt;k-editor v-model="form.content" :options="options" :disabled="saving" @upload="onUpload" /&gt;
+&lt;/template&gt;
+
+&lt;script setup&gt;
+import { ref } from 'vue'
+
+const form = ref({ content: '' })
+const saving = ref(false)
+
+const options = {
+  // 不写 height 就是自适应内容高度；写了则固定高度、内容超出时编辑区内部滚动
+  height: 420,
+  // 无后端时保持默认 'mock'；上线时换成下面两行即可
+  uploader: '/api/upload',              // 普通上传：整个文件一次请求
+  chunkUploader: '/api/chunk-upload',   // 分片上传：大文件自动切片（≥ 5MB）
+  upload: { mode: 'auto', chunkSize: 5 * 1024 * 1024, concurrency: 4 },
+}
+
+const onUpload = (payload) =&gt; console.log(payload.stage, payload.percent)
+&lt;/script&gt;</code></pre>
+      </div>
+
+      <div class="callout callout--tip">
+        <svg class="callout__icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 3l7.5 3.4v5.2c0 4.4-3 8-7.5 9.4-4.5-1.4-7.5-5-7.5-9.4V6.4L12 3Z"></path><path d="M9 12.2l2.2 2.2L15.5 10"></path></svg>
+        <p><code>kyle-editor/vue</code> 的默认导出就是<strong>组件本身（自带 <code>install</code>）</strong>，所以 <code>app.use(KEditorVue)</code> 后模板里用全局标签 <code>&lt;k-editor&gt;</code>，与直接 <code>import KEditorVue</code> 当组件用 <code>&lt;KEditorVue v-model="html" /&gt;</code> 两种写法等价。只想显式拿插件时用 <code>import { KEditorPlugin }</code>。</p>
+      </div>
+
+      <!-- ------------------------------------------------------------ -->
+      <h2 id="options">常用配置</h2>
+
+      <p>下面这些是 90% 的场景会用到的。完整清单见 <a href="api.html#options">API 参考 · 配置项</a>。</p>
+
+      <div class="kv">
+        <div class="kv__row">
+          <div class="kv__key">value</div>
+          <div class="kv__val">初始 HTML；留空时取挂载节点的 <code>innerHTML</code></div>
+        </div>
+        <div class="kv__row">
+          <div class="kv__key">placeholder</div>
+          <div class="kv__val">空内容占位文案，默认 <code>'开始撰写内容…'</code></div>
+        </div>
+        <div class="kv__row">
+          <div class="kv__key">height</div>
+          <div class="kv__val">内容区高度。不写 / <code>0</code> / <code>'auto'</code> = <strong>随内容自动撑开</strong>；填 px 才固定高度并内部滚动</div>
+        </div>
+        <div class="kv__row">
+          <div class="kv__key">primaryColor</div>
+          <div class="kv__val">主题色，默认 <code>'#07c160'</code>（CSS 变量 <code>--ke-primary</code>）</div>
+        </div>
+        <div class="kv__row">
+          <div class="kv__key">toolbar</div>
+          <div class="kv__val">工具栏项数组，<code>false</code> 隐藏；分隔符 <code>'|'</code>，右对齐标记 <code>':tail'</code></div>
+        </div>
+        <div class="kv__row">
+          <div class="kv__key">readOnly</div>
+          <div class="kv__val">只读模式；运行时用 <code>editor.setReadOnly(bool)</code></div>
+        </div>
+        <div class="kv__row">
+          <div class="kv__key">wordCount</div>
+          <div class="kv__val">底部字数 / 词数 / 图片视频统计，默认 <code>true</code></div>
+        </div>
+        <div class="kv__row">
+          <div class="kv__key">maxLength</div>
+          <div class="kv__val">超出后提示（软限制，不截断输入）</div>
+        </div>
+        <div class="kv__row">
+          <div class="kv__key">historyLimit</div>
+          <div class="kv__val">撤销栈深度，默认 <code>60</code></div>
+        </div>
+      </div>
+
+      <div class="code-block">
+        <div class="code-block__head">
+          <span>一份常见的完整配置</span>
+          <button class="copy-btn" type="button">复制</button>
+        </div>
+<pre><code>const editor = KEditor.create('#editor', {
+  value: '&lt;p&gt;初始内容&lt;/p&gt;',
+  placeholder: '开始撰写内容…',
+  primaryColor: '#07c160',
+  height: 0,                 // 自适应内容高度
+  paperWidth: 677,           // 公众号正文版心
+  wordCount: true,
+
+  uploader: '/api/upload',
+  chunkUploader: '/api/chunk-upload',
+
+  code: { defaultLanguage: 'javascript' },
+  markdown: { insertMode: 'replace' },
+
+  toolbar: [
+    'undo', 'redo', '|',
+    'heading', 'fontsize', '|',
+    'bold', 'italic', 'underline', 'strike', '|',
+    'foreColor', 'backColor', '|',
+    'alignLeft', 'alignCenter', 'alignRight', '|',
+    'ul', 'ol', 'quote', '|',
+    'link', 'image', 'video', 'table', 'code', 'hr', 'clear',
+    ':tail', 'markdown', 'source', 'fullscreen',
+  ],
+
+  onUpload: ({ stage, percent }) =&gt; console.log(stage, percent),
+})</code></pre>
+      </div>
+
+      <div class="callout callout--warn">
+        <svg class="callout__icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 3.5 21 20H3L12 3.5Z"></path><path d="M12 10v4M12 17h.01"></path></svg>
+        <p><code>preview</code> <strong>不在默认工具栏里</strong>（默认尾栏是「导入MD / 源码 / 全屏」），但预览能力没变：用 <code>editor.openPreview()</code>，或者把 <code>'preview'</code> 写回 <code>toolbar</code>。</p>
+      </div>
+
+      <!-- ------------------------------------------------------------ -->
+      <h2 id="upload">上传：整包与分片</h2>
+
+      <p>上传分两条链路，<strong>互不影响</strong>，可以只配一条，也可以都配。</p>
+
+      <div class="table-wrap">
+        <table class="data">
+          <thead>
+            <tr><th>链路</th><th>适用</th><th>行为</th></tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td><strong>普通上传</strong><br><code>uploader</code></td>
+              <td>小文件（图片为主）</td>
+              <td>整个文件<strong>一次请求</strong>发完，返回 <code>url</code> 即成功</td>
+            </tr>
+            <tr>
+              <td><strong>分片上传</strong><br><code>chunkUploader</code></td>
+              <td>大文件（视频为主）</td>
+              <td>切片 → 并发 → 重试，<strong>只需一个接口</strong>，响应里 <code>url</code> 非空即成功</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
+      <div class="code-block">
+        <div class="code-block__head">
+          <span>两条链路各自配置</span>
+          <button class="copy-btn" type="button">复制</button>
+        </div>
+<pre><code>KEditor.create('#editor', {
+  uploader: '/api/upload',                        // 普通上传（整个文件一次请求）
+  chunkUploader: '/api/chunk-upload',             // 分片上传（切片并发）
+  upload: {
+    mode: 'auto',                                 // 'auto' 按体积自动选（默认）| 'normal' | 'chunk'
+    chunkThreshold: 5 * 1024 * 1024,              // auto：达到该体积才走分片
+    chunkSize: 1024 * 1024,                       // 分片大小
+    concurrency: 4,                               // 并发分片数
+    retries: 2,                                   // 单片失败重试次数
+  },
+})</code></pre>
+      </div>
+
+      <h3>你配了什么，就是什么行为</h3>
+
+      <div class="table-wrap">
+        <table class="data">
+          <thead>
+            <tr><th>你配了什么</th><th>实际行为</th></tr>
+          </thead>
+          <tbody>
+            <tr><td>两条都配</td><td><code>mode: 'auto'</code>：小于 <code>chunkThreshold</code> 走普通，否则走分片</td></tr>
+            <tr><td>只配 <code>uploader</code></td><td><strong>全部走普通上传</strong>（分片不启用，不会静默用 mock）</td></tr>
+            <tr><td>只配 <code>chunkUploader</code></td><td><strong>全部走分片上传</strong>（<code>mode</code> 默认变 <code>'chunk'</code>）</td></tr>
+            <tr><td>两条都不配</td><td>默认两条都是 <code>'mock'</code>：小文件普通、大文件分片（开箱演示）</td></tr>
+          </tbody>
+        </table>
+      </div>
+
+      <div class="callout callout--tip">
+        <svg class="callout__icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 3l7.5 3.4v5.2c0 4.4-3 8-7.5 9.4-4.5-1.4-7.5-5-7.5-9.4V6.4L12 3Z"></path><path d="M9 12.2l2.2 2.2L15.5 10"></path></svg>
+        <p>只配一条链路时，另一条<strong>不会</strong>被默认 <code>mock</code> 顶上 —— 否则真实后端只接了一半，另一半会静默产生 <code>blob:</code> 假地址。</p>
+      </div>
+
+      <h3>接口约定</h3>
+
+      <p><strong>普通上传</strong>：整包 <code>POST</code>（<code>multipart/form-data</code>），请求字段 <code>file</code>（可用 <code>fieldName</code> 改）、<code>filename</code>、<code>fileSize</code>；响应 <code>{ "url": "https://cdn/a.png" }</code>，也支持 <code>{ code: 0, data: { url } }</code>（用 <code>parse</code> 解开）。没返回 <code>url</code> 视为失败，占位块转错误态并提供「重试 / 移除」。</p>
+
+      <p><strong>分片上传</strong>：<strong>每个分片都 POST 到 <code>chunkUploader</code> 这一个地址</strong>。请求字段 <code>file</code>（分片二进制）、<code>identifier</code>（同一文件恒定的指纹）、<code>index</code>（从 0 起）、<code>total</code>、<code>filename</code>、<code>fileSize</code>、<code>chunkSize</code>。只要某个响应里返回非空 <code>url</code>，就代表<strong>这个文件</strong>上传成功，编辑器立刻用它替换占位块，剩余分片不再上传 —— 服务端秒传、或收齐最后一片时返回都可以。</p>
+
+      <div class="code-block">
+        <div class="code-block__head">
+          <span>需要鉴权 / 自定义字段名 / 自定义取地址字段</span>
+          <button class="copy-btn" type="button">复制</button>
+        </div>
+<pre><code>KEditor.create('#editor', {
+  chunkUploader: {
+    type: 'http',
+    url: '/api/chunk-upload',
+    fieldName: 'chunk',                                         // 默认 'file'
+    headers: () =&gt; ({ Authorization: `Bearer ${getToken()}` }), // 传函数则每次请求实时取值
+    withCredentials: true,
+    parse: (json) =&gt; json.data,                                 // 默认 json.data ?? json
+    pickUrl: (json) =&gt; json?.payload?.filePath || '',           // 默认认 url / fileUrl / src
+    mode: 'formdata',                                           // 默认 formdata；可换 'raw'
+  },
+})</code></pre>
+      </div>
+
+      <h3>其他写法（两条链路通用）</h3>
+
+      <div class="code-block">
+        <div class="code-block__head">
+          <span>适配器怎么写都可以</span>
+          <button class="copy-btn" type="button">复制</button>
+        </div>
+<pre><code>uploader: '/api/upload'                                   // 字符串地址
+uploader: { type: 'http', url: '/api/upload' }            // 显式写法
+uploader: KEditor.httpAdapter({ url: '/api/upload' })     // 自己造适配器
+uploader: KEditor.simpleAdapter(async (file) =&gt; myUpload(file))  // 函数包装
+uploader: async (file) =&gt; (await myUpload(file)).url      // 直接给函数也可以
+uploader: 'mock'                                          // 零后端，生成 blob: 地址
+uploader: KEditor.mockAdapter({ speed: 8 })               // mock 可调速度 / 延迟 / 失败率</code></pre>
+      </div>
+
+      <div class="callout callout--danger">
+        <svg class="callout__icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="9"></circle><path d="M12 7.5v5M12 16h.01"></path></svg>
+        <p>分片上传现在是<strong>单接口</strong>：<code>httpAdapter</code> 不再接受 <code>initUrl</code> / <code>chunkUrl</code> / <code>completeUrl</code> / <code>abortUrl</code>，配了会直接报错提示迁移。需要自定义 <code>init</code> / <code>complete</code> 流程时，自己实现适配器传给 <code>chunkUploader</code>。</p>
+      </div>
+
+      <p class="tabs__note">进度、速度、取消、重试的完整适配器协议与后端实现建议，见仓库 <code>docs/upload-adapter.md</code>。</p>
+
+      <!-- ------------------------------------------------------------ -->
+      <h2 id="markdown">导入 Markdown</h2>
+
+      <p>尾栏的 <strong>导入MD</strong> 按钮打开导入面板：选文件、拖文件，或直接粘文本，<strong>实时预览</strong>转换结果与结构统计，再选落点导入。把 <code>.md</code> / <code>.markdown</code> / <code>.txt</code> 文件<strong>拖进正文</strong>也能直接转换。</p>
+
+      <div class="code-block">
+        <div class="code-block__head">
+          <span>导入配置</span>
+          <button class="copy-btn" type="button">复制</button>
+        </div>
+<pre><code>KEditor.create('#editor', {
+  markdown: {
+    insertMode: 'replace',     // 默认落点：replace 替换全文 / append 追加文末 / cursor 插入光标
+    maxSize: 5 * 1024 * 1024,  // 单文件上限（字节），0 = 不限制
+    gfm: true,                 // 表格 / 删除线 / 任务列表 / 裸链接
+    breaks: false,             // true = 段落内单换行也当硬换行
+    linkTarget: false,         // true 或 '_blank' = 外链自动加 target + rel
+    frontMatter: true,         // 丢弃开头的 YAML front matter
+  },
+})</code></pre>
+      </div>
+
+      <div class="code-block">
+        <div class="code-block__head">
+          <span>运行时导入（source 支持 文本 / File / { name, content }）</span>
+          <button class="copy-btn" type="button">复制</button>
+        </div>
+<pre><code>await editor.importMarkdown(mdText)                   // 按 options.markdown.insertMode 落点
+await editor.importMarkdown(file, { mode: 'append' }) // 临时指定落点
+await editor.setMarkdown(mdText)                      // 替换全文
+await editor.insertMarkdown(mdText)                   // 插入光标处
+await editor.appendMarkdown(mdText)                   // 追加到文末
+
+editor.markdownOptions()   // { insertMode: 'replace', maxSize: 5242880, auto: true }
+
+editor.on('markdownimport', ({ mode, name, summary }) =&gt; {
+  console.log(mode, name, summary)
+})</code></pre>
+      </div>
+
+      <p>导入返回值是 <code>{ ok, html, summary, mode, chars, name }</code>；只读模式返回 <code>{ ok: false, reason: 'readonly' }</code>，超限或读文件失败返回 <code>{ ok: false, reason: 'error' }</code>。</p>
+
+      <h3>支持的语法</h3>
+
+      <div class="table-wrap">
+        <table class="data">
+          <thead>
+            <tr><th>类别</th><th>说明</th></tr>
+          </thead>
+          <tbody>
+            <tr><td>标题</td><td><code>#</code> ~ <code>######</code> 与 setext（<code>===</code> / <code>---</code>）</td></tr>
+            <tr><td>列表</td><td>有序 / 无序 / 嵌套 / 松散段落 / 任务列表（<code>- [x]</code> → ☑）</td></tr>
+            <tr><td>表格</td><td>GFM 表格，列对齐写入 <code>style="text-align:…"</code></td></tr>
+            <tr><td>代码块</td><td>围栅与缩进，<strong>语言保留并高亮</strong>（<code>data-k-lang</code> + <code>class="language-x"</code>），未知语言退化纯文本</td></tr>
+            <tr><td>行内</td><td>粗体 / 斜体 / 删除线 / 行内代码 / 转义 / 硬换行 / 引用式与自动链接 / 图片</td></tr>
+            <tr><td>其他</td><td>引用（含嵌套与懒续行）、分隔线、YAML front matter 丢弃、内联 HTML 与 HTML 块</td></tr>
+          </tbody>
+        </table>
+      </div>
+
+      <div class="callout callout--warn">
+        <svg class="callout__icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 3.5 21 20H3L12 3.5Z"></path><path d="M12 10v4M12 17h.01"></path></svg>
+        <p>导入是 <strong>GFM 子集</strong>：不支持脚注、目录（TOC）、数学公式与自定义容器（callout），这些语法会按普通段落渲染。导入是<strong>单次快照</strong>，不会与源 <code>.md</code> 保持双向同步。</p>
+      </div>
+
+      <div class="callout callout--tip">
+        <svg class="callout__icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 3l7.5 3.4v5.2c0 4.4-3 8-7.5 9.4-4.5-1.4-7.5-5-7.5-9.4V6.4L12 3Z"></path><path d="M9 12.2l2.2 2.2L15.5 10"></path></svg>
+        <p>文件编码先按严格 UTF-8 解码，失败回退 <code>gb18030</code> / <code>gbk</code> / <code>big5</code>。相对路径图片（<code>![](./img/a.png)</code>）只保留路径文本，不会自动上传。</p>
+      </div>
+
+      <!-- ------------------------------------------------------------ -->
+      <h2 id="code">代码块与高亮</h2>
+
+      <p>点工具栏「代码块」就是一个<strong>语言面板</strong>，20 种内置语言，支持按名称或别名搜索（<code>js</code> / <code>mysql</code> / <code>yml</code>）。光标已在某个代码块里时，同一个面板变成「代码块语言」，选一项即改写当前块并重新着色。</p>
+
+      <div class="code-block">
+        <div class="code-block__head">
+          <span>配置与运行时 API</span>
+          <button class="copy-btn" type="button">复制</button>
+        </div>
+<pre><code>KEditor.create('#editor', {
+  code: {
+    languages: ['js', 'python', 'go', 'sql'], // 只留几种（主名或别名都认）；不写 = 全部 20 种
+    defaultLanguage: 'python',                // 新建代码块默认语言
+    highlight: true,                          // false = 只保留纯文本，语言标记照写
+  },
+})
+
+editor.insertCode('const a = 1', 'js')   // 插入代码块（语言可省，用 defaultLanguage）
+editor.setCodeLanguage('sql')            // 改写光标所在块的语言
+editor.getCodeLanguage()                 // 不在块内返回 ''
+editor.codeLanguages()                   // [{ value, label, hint }, …]
+editor.getState().inCode                 // 光标是否在代码块内</code></pre>
+      </div>
+
+      <p>语言同时写在 <code>&lt;pre data-k-lang="javascript"&gt;</code> 与 <code>&lt;code class="language-javascript"&gt;</code> 上；外部 HTML 只带 <code>class="language-xxx"</code> 也能识别并补上标记。</p>
+
+      <div class="callout callout--tip">
+        <svg class="callout__icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 3l7.5 3.4v5.2c0 4.4-3 8-7.5 9.4-4.5-1.4-7.5-5-7.5-9.4V6.4L12 3Z"></path><path d="M9 12.2l2.2 2.2L15.5 10"></path></svg>
+        <p><strong>高亮只是编辑/预览时的显示效果</strong>：<code>getHTML()</code>、源码模式、复制出去的内容都是<strong>不带 token <code>&lt;span&gt;</code> 的干净代码</strong>，再次导入会自动重新高亮。单块超过 60 KB 退化为纯文本，避免长文卡顿。</p>
+      </div>
+
+      <!-- ------------------------------------------------------------ -->
+      <h2 id="style">版心与高度</h2>
+
+      <h3>高度：默认自适应</h3>
+
+      <p>不配置 <code>height</code> 时，内容区<strong>随内容自动撑开</strong>（整页滚动，工具栏尽量吸附视口顶部）；配置了才固定高度，内容超出时在编辑区内部滚动。</p>
+
+      <div class="code-block">
+        <div class="code-block__head">
+          <span>高度控制</span>
+          <button class="copy-btn" type="button">复制</button>
+        </div>
+<pre><code>KEditor.create('#editor', {})                  // 自适应：默认行为
+KEditor.create('#editor', { height: 460 })     // 固定 460px，内部滚动
+KEditor.create('#editor', { minHeight: 200 })  // 只控最小高度
+
+// 运行时切换
+editor.setHeight(600)      // 固定 600px
+editor.setHeight(0)        // 回到自适应（也接受 'auto'）
+editor.heightOptions()     // { height: 0, auto: true }</code></pre>
+      </div>
+
+      <h3>版心：宽屏不浪费</h3>
+
+      <p>宽屏下如果版心固定 677px，编辑器两侧会出现大片空白。默认采用 <strong>fluid 版心</strong>：版心不小于 <code>paperWidth</code>，宽屏时随容器生长，两侧留白恒定为 <code>paperGap</code>。</p>
+
+      <div class="code-block">
+        <div class="code-block__head">
+          <span>版心配置</span>
+          <button class="copy-btn" type="button">复制</button>
+        </div>
+<pre><code>KEditor.create('#editor', {
+  paperWidth: 677,     // 版心基准宽（公众号）；fluid 模式下它是最小宽度
+  paperMode: 'fluid',  // 'fluid'（默认）| 'fixed'（恒定 paperWidth + 64）
+  paperGap: 24,        // fluid 模式下单侧留白
+  paperMaxWidth: 0,    // fluid 模式下的版心上限，0 = 不限
+})
+
+// 运行时调整（侧栏折叠、布局变化时）
+editor.setPaper({ mode: 'fixed' })
+editor.setPaper({ gap: 40, maxWidth: 1000 })
+editor.paperOptions()  // { width, mode, gap, maxWidth }</code></pre>
+      </div>
+
+      <div class="table-wrap">
+        <table class="data">
+          <thead>
+            <tr><th>需求</th><th>配置</th></tr>
+          </thead>
+          <tbody>
+            <tr><td>永远像公众号那样居中一栏</td><td><code>paperMode: 'fixed'</code></td></tr>
+            <tr><td>宽屏也想多写点字</td><td>默认 fluid（不限上限）</td></tr>
+            <tr><td>宽屏但可读性优先</td><td>fluid + <code>paperMaxWidth: 1000</code></td></tr>
+          </tbody>
+        </table>
+      </div>
+
+      <!-- ------------------------------------------------------------ -->
+      <h2 id="custom">自定义按钮</h2>
+
+      <p>不想改源码就往工具栏加业务按钮。典型场景：插入公司模板、关联栏目、跳转后台页面。</p>
+
+      <div class="code-block">
+        <div class="code-block__head">
+          <span>加一个下拉选择按钮</span>
+          <button class="copy-btn" type="button">复制</button>
+        </div>
+<pre><code>const editor = KEditor.create('#editor', {
+  customButtons: [
+    // ① 数据从接口读取
+    {
+      name: 'column',
+      text: '栏目',
+      title: '插入栏目链接',
+      searchable: true,         // 面板内搜索
+      url: '/api/columns',      // 内部 fetch，自动识别 items/list/data/rows/records
+      link: true,               // 用每项自带的地址（url / href / link 字段）
+      insert: 'link',
+      position: { after: 'link' },   // 放到「链接」之后
+    },
+    // ② 数据静态配置
+    {
+      name: 'tpl',
+      text: '模板',
+      options: [
+        { value: 'opening', label: '开场白', desc: '问候 + 本期导读', group: '通用' },
+        { value: 'ending',  label: '结束语', desc: '引导关注与转发', group: '通用' },
+      ],
+      link: { url: 'https://mp.weixin.qq.com/s/tpl-{value}', text: '【{label}】', target: '_blank' },
+    },
+  ],
+})
+
+editor.on('customselect', ({ name, item, link, action }) =&gt; {
+  console.log(name, item.label, '→', link?.url, '（插入方式：' + action + '）')
+})</code></pre>
+      </div>
+
+      <p><code>position</code> 可以把它放到工具栏<strong>任意位置</strong>：<code>'start'</code> 最前、<code>'tail'</code> 右侧吸附尾栏（与「导入MD / 源码 / 全屏」同区）、数字索引、或者 <code>{ before }</code> / <code>{ after }</code> 锚点。锚点找不到会自动回退，不报错、不丢按钮。</p>
+
+      <p>运行时也能增删移位：<code>addButton</code> / <code>moveButton</code> / <code>removeButton</code> / <code>setButtonOptions</code> / <code>getButtonValue</code> / <code>setButtonValue</code>。完整字段说明见 <a href="api.html#custom-buttons">API 参考 · 自定义工具栏按钮</a>。</p>
+
+      <!-- ------------------------------------------------------------ -->
+      <h2 id="save">保存与回填</h2>
+
+      <p>取内容用 <code>getHTML()</code>，回填用 <code>value</code> 或 <code>setContent()</code>。默认取到的是<strong>干净产物</strong>：编辑器内部属性与未完成占位块都被剔除，也没有代码高亮的 token <code>&lt;span&gt;</code>。</p>
+
+      <div class="code-block">
+        <div class="code-block__head">
+          <span>一个最小的自动保存</span>
+          <button class="copy-btn" type="button">复制</button>
+        </div>
+<pre><code>const editor = KEditor.create('#editor', {
+  value: await fetchDraft(),          // 回填：初始 HTML
+  // 高度自适应，不用管
+})
+
+let timer = null
+editor.on('change', () =&gt; {
+  clearTimeout(timer)                 // change 已内置 160ms 防抖，这里再做一次幂等
+  timer = setTimeout(async () =&gt; {
+    await fetch('/api/draft', {
+      method: 'PUT',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ html: editor.getHTML() }),
+    })
+  }, 1200)
+})
+
+editor.on('save', () =&gt; saveNow())    // ⌘/Ctrl + S 触发</code></pre>
+      </div>
+
+      <div class="table-wrap">
+        <table class="data">
+          <thead>
+            <tr><th>方法</th><th>说明</th></tr>
+          </thead>
+          <tbody>
+            <tr><td><code>getHTML()</code></td><td>取干净 HTML（默认剔除内部属性与未完成占位块）</td></tr>
+            <tr><td><code>getHTML({ clean: 'preview' })</code></td><td>保留代码高亮，用于预览渲染</td></tr>
+            <tr><td><code>getHTML({ clean: false })</code></td><td>原始 HTML，仅调试用</td></tr>
+            <tr><td><code>getText()</code> / <code>getJSON()</code></td><td>纯文本 / <code>{html, text, counts}</code></td></tr>
+            <tr><td><code>setContent(html, { sanitize?, silent? })</code></td><td>覆盖内容</td></tr>
+            <tr><td><code>counts()</code></td><td><code>{chars, words, images, videos, uploading}</code></td></tr>
+          </tbody>
+        </table>
+      </div>
+
+      <div class="callout callout--warn">
+        <svg class="callout__icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 3.5 21 20H3L12 3.5Z"></path><path d="M12 10v4M12 17h.01"></path></svg>
+        <p>默认上传适配器产生的 <code>blob:</code> 地址<strong>仅当前会话有效</strong>，正式环境请配置真实上传接口。入库前建议再跑一次 <code>sanitizeHtml</code>。</p>
+      </div>
+
+      <!-- ------------------------------------------------------------ -->
+      <h2 id="security">安全</h2>
+
+      <p>所有进入编辑器的外部 HTML（<code>value</code>、<code>setContent</code>、粘贴）都会经过白名单净化：</p>
+
+      <ul>
+        <li><strong>标签与属性双白名单</strong>，未知标签直接丢弃</li>
+        <li><code>on*</code> 事件属性一律剔除</li>
+        <li><code>javascript:</code> / <code>vbscript:</code> / <code>file:</code> / 非法 <code>data:</code> 协议拦截</li>
+        <li><code>style</code> 声明逐条过滤（丢弃 <code>expression</code>、<code>behavior</code> 等）</li>
+        <li>Markdown 转换产物同样再过一遍白名单，<code>&lt;script&gt;</code> 会被清掉或转义</li>
+      </ul>
+
+      <div class="callout callout--danger">
+        <svg class="callout__icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="9"></circle><path d="M12 7.5v5M12 16h.01"></path></svg>
+        <p><code>getHTML({ clean: false })</code> 会返回含编辑器内部属性的原始 HTML，请仅在调试时使用。</p>
+      </div>
+
+      <!-- ------------------------------------------------------------ -->
+      <h2 id="next">下一步</h2>
+
+      <div class="doc-cards">
+        <a class="doc-card" href="api.html">
+          <h4>API 参考</h4>
+          <p>全部配置项、实例方法、事件、指令集与可独立使用的工具函数。</p>
+        </a>
+        <a class="doc-card" href="playground.html">
+          <h4>在线试用</h4>
+          <p>整页的实机编辑器，随便试：导入 Markdown、代码块、上传、源码模式。</p>
+        </a>
+        <a class="doc-card" href="https://www.npmjs.com/package/kyle-editor" target="_blank" rel="noopener noreferrer">
+          <h4>npm 包</h4>
+          <p>查看版本历史与安装量，或直接引用 CDN 入口。</p>
+        </a>
+      </div>
+
+      <div class="doc-pager">
+        <a href="index.html">
+          <span class="doc-pager__dir">← 上一页</span>
+          <span class="doc-pager__name">首页</span>
+        </a>
+        <a class="doc-pager__next" href="api.html">
+          <span class="doc-pager__dir">下一页 →</span>
+          <span class="doc-pager__name">API 参考</span>
+        </a>
+      </div>
+
+    </article>
+
+    <aside class="doc-outline" id="doc-outline" aria-label="本页目录"></aside>
+
+  </div>
+</div>
+
+<footer class="site-footer">
+  <div class="container">
+    <div class="site-footer__grid">
+      <div class="site-footer__brand">
+        <a class="brand" href="index.html">
+          <svg class="brand__logo" viewBox="0 0 32 32" aria-hidden="true">
+            <rect width="32" height="32" rx="9" fill="url(#kg)"></rect>
+            <path d="M11 8.5v15M11 16.2l7.2-7.7M11 15.6l7.6 7.9" stroke="#fff" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" fill="none"></path>
+          </svg>
+          KEditor
+        </a>
+        <p>轻量、美观的微信公众号风格富文本编辑器。纯前端，零运行时依赖，MIT 许可。</p>
+      </div>
+
+      <div>
+        <h4>文档</h4>
+        <ul>
+          <li><a href="guide.html">快速上手</a></li>
+          <li><a href="api.html">API 参考</a></li>
+          <li><a href="playground.html">在线试用</a></li>
+        </ul>
+      </div>
+
+      <div>
+        <h4>资源</h4>
+        <ul>
+          <li><a href="https://www.npmjs.com/package/kyle-editor" target="_blank" rel="noopener noreferrer">npm 包</a></li>
+          <li><a href="https://unpkg.com/kyle-editor" target="_blank" rel="noopener noreferrer">CDN 入口</a></li>
+          <li><a href="https://github.com/kyle-xiaoku/kyle-editor" target="_blank" rel="noopener noreferrer">GitHub</a></li>
+          <li><a href="https://gitee.com/xiaokudong/kyle-editor" target="_blank" rel="noopener noreferrer">Gitee</a></li>
+        </ul>
+      </div>
+
+      <div>
+        <h4>相关</h4>
+        <ul>
+          <li><a href="guide.html#markdown">Markdown 导入</a></li>
+          <li><a href="guide.html#upload">上传配置</a></li>
+          <li><a href="api.html#custom-buttons">自定义按钮</a></li>
+          <li><a href="api.html#security">安全说明</a></li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="site-footer__bottom">
+      <span>MIT License © 2026 KEditor</span>
+      <span>版本 v1.0.8 · 样式随 JS 注入，无需引入 CSS</span>
+    </div>
+  </div>
+</footer>
+
+<script src="assets/js/site.js" defer></script>
+</body>
+</html>

@@ -1,0 +1,858 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>API 参考 · KEditor</title>
+<meta name="description" content="KEditor API 参考：全部配置项、自定义工具栏按钮、代码块与 Markdown API、实例方法与事件、指令集、可独立使用的工具函数与安全说明。">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='8' fill='%2307c160'/%3E%3Ctext x='16' y='23' font-size='19' font-family='Helvetica,sans-serif' font-weight='700' fill='%23fff' text-anchor='middle'%3EK%3C/text%3E%3C/svg%3E">
+<link rel="stylesheet" href="assets/css/base.css">
+<link rel="stylesheet" href="assets/css/docs.css">
+</head>
+<body>
+
+<header class="site-header">
+  <div class="container site-header__inner">
+    <a class="brand" href="index.html">
+      <svg class="brand__logo" viewBox="0 0 32 32" aria-hidden="true">
+        <defs>
+          <linearGradient id="kg" x1="0" y1="0" x2="32" y2="32">
+            <stop offset="0" stop-color="#28d17c"></stop>
+            <stop offset="1" stop-color="#05a250"></stop>
+          </linearGradient>
+        </defs>
+        <rect width="32" height="32" rx="9" fill="url(#kg)"></rect>
+        <path d="M11 8.5v15M11 16.2l7.2-7.7M11 15.6l7.6 7.9" stroke="#fff" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" fill="none"></path>
+      </svg>
+      KEditor
+      <span class="brand__ver">v1.0.8</span>
+    </a>
+
+    <nav class="nav">
+      <a class="nav__link" href="index.html">首页</a>
+      <a class="nav__link" href="guide.html">快速上手</a>
+      <a class="nav__link is-active" href="api.html">API 参考</a>
+      <a class="nav__link" href="playground.html">在线试用</a>
+    </nav>
+
+    <div class="site-header__actions">
+      <a class="icon-link" href="https://github.com/kyle-xiaoku/kyle-editor" target="_blank" rel="noopener noreferrer" title="GitHub" aria-label="GitHub">
+        <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 .5A11.5 11.5 0 0 0 .5 12a11.5 11.5 0 0 0 7.86 10.92c.58.1.79-.25.79-.56v-2c-3.2.7-3.88-1.37-3.88-1.37-.53-1.34-1.3-1.7-1.3-1.7-1.06-.72.08-.7.08-.7 1.17.08 1.79 1.2 1.79 1.2 1.04 1.79 2.73 1.27 3.4.97.1-.75.4-1.27.74-1.56-2.55-.29-5.24-1.28-5.24-5.7 0-1.26.45-2.29 1.19-3.1-.12-.29-.52-1.46.11-3.05 0 0 .97-.31 3.18 1.18a11 11 0 0 1 5.8 0c2.2-1.49 3.17-1.18 3.17-1.18.63 1.59.23 2.76.12 3.05.74.81 1.18 1.84 1.18 3.1 0 4.43-2.69 5.4-5.25 5.69.41.36.78 1.06.78 2.14v3.17c0 .31.21.67.8.56A11.5 11.5 0 0 0 23.5 12 11.5 11.5 0 0 0 12 .5Z"></path></svg>
+      </a>
+      <a class="icon-link" href="https://www.npmjs.com/package/kyle-editor" target="_blank" rel="noopener noreferrer" title="npm" aria-label="npm">
+        <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M1.5 5h21v12.2h-10.4V19H7.6v-1.8H1.5V5Zm1.9 1.9v8.4h3.3V8.8h1.8v6.5h1.6V6.9H3.4Zm8.5 0v8.4h1.9V8.8h1.6v6.5h2.4V6.9h-5.9Zm7.2 0v8.4h1.6V8.8h1.5v6.5h1.7V6.9h-4.8Z"></path></svg>
+      </a>
+      <button class="nav-toggle" type="button" aria-expanded="false" aria-controls="site-drawer" aria-label="打开菜单">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><path d="M4 7h16M4 12h16M4 17h16"></path></svg>
+      </button>
+    </div>
+  </div>
+</header>
+
+<nav class="drawer" id="site-drawer" aria-label="移动端导航">
+  <a class="drawer__link" href="index.html">首页</a>
+  <a class="drawer__link" href="guide.html">快速上手</a>
+  <a class="drawer__link is-active" href="api.html">API 参考</a>
+  <a class="drawer__link" href="playground.html">在线试用</a>
+  <a class="drawer__link" href="https://github.com/kyle-xiaoku/kyle-editor" target="_blank" rel="noopener noreferrer">GitHub</a>
+</nav>
+
+<section class="doc-hero">
+  <div class="container doc-hero__inner">
+    <div class="doc-hero__crumbs">
+      <a href="index.html">首页</a>
+      <span>/</span>
+      <span>API 参考</span>
+    </div>
+    <h1>API 参考</h1>
+    <p>全部配置项、实例方法、事件、指令集与可独立使用的工具函数。包内自带 TypeScript 声明，<code>import KEditor from 'kyle-editor'</code> 即有完整提示。</p>
+  </div>
+</section>
+
+<div class="container">
+  <div class="docs-layout docs-layout--with-outline">
+
+    <aside class="doc-aside">
+      <nav class="doc-nav" aria-label="文档目录">
+        <div class="doc-nav__group">
+          <div class="doc-nav__title">基础</div>
+          <ul>
+            <li><a href="#create">创建实例</a></li>
+            <li><a href="#options">配置项 options</a></li>
+            <li><a href="#toolbar">工具栏项</a></li>
+          </ul>
+        </div>
+        <div class="doc-nav__group">
+          <div class="doc-nav__title">扩展</div>
+          <ul>
+            <li><a href="#custom-buttons">自定义工具栏按钮</a></li>
+            <li><a href="#code">代码块与高亮</a></li>
+            <li><a href="#markdown">导入 Markdown</a></li>
+          </ul>
+        </div>
+        <div class="doc-nav__group">
+          <div class="doc-nav__title">运行时</div>
+          <ul>
+            <li><a href="#instance">实例属性与方法</a></li>
+            <li><a href="#events">事件</a></li>
+            <li><a href="#commands">指令集</a></li>
+          </ul>
+        </div>
+        <div class="doc-nav__group">
+          <div class="doc-nav__title">其他</div>
+          <ul>
+            <li><a href="#utils">工具函数</a></li>
+            <li><a href="#typescript">TypeScript</a></li>
+            <li><a href="#security">安全说明</a></li>
+          </ul>
+        </div>
+      </nav>
+    </aside>
+
+    <div class="doc-aside__mobile"><nav id="doc-mobile-nav" aria-label="文档目录（移动端）"></nav></div>
+
+    <article class="doc-body">
+
+      <!-- ------------------------------------------------------------ -->
+      <h2 id="create">创建实例</h2>
+
+      <div class="code-block">
+        <div class="code-block__head">
+          <span>两种等价写法</span>
+          <button class="copy-btn" type="button">复制</button>
+        </div>
+<pre><code>import { KEditor } from 'kyle-editor'
+
+const editor = new KEditor('#editor', { /* options */ })
+
+// 或工厂方法；el 可以是选择器 / HTMLElement / Vue ref.$el
+const editor = KEditor.create(el, options)</code></pre>
+      </div>
+
+      <!-- ------------------------------------------------------------ -->
+      <h2 id="options">配置项 options</h2>
+
+      <div class="table-wrap">
+        <table class="data">
+          <thead>
+            <tr><th>配置</th><th>类型</th><th>默认值</th><th>说明</th></tr>
+          </thead>
+          <tbody>
+            <tr><td><code>value</code></td><td><code>string</code></td><td><code>''</code></td><td>初始 HTML；留空时取挂载节点的 <code>innerHTML</code></td></tr>
+            <tr><td><code>placeholder</code></td><td><code>string</code></td><td><code>'开始撰写内容…'</code></td><td>空内容占位文案</td></tr>
+            <tr><td><code>height</code></td><td><code>number \| 'auto'</code></td><td><code>0</code></td><td>内容区高度：<code>0</code> / <code>'auto'</code> / 不写 = <strong>随内容自动撑开</strong>（整页滚动）；填 px 才固定高度并内部滚动</td></tr>
+            <tr><td><code>minHeight</code></td><td><code>number</code></td><td><code>320</code></td><td>纸张最小高度</td></tr>
+            <tr><td><code>paperWidth</code></td><td><code>number</code></td><td><code>677</code></td><td>版心基准宽度（与公众号一致）；<code>fluid</code> 模式下它是最小宽度</td></tr>
+            <tr><td><code>paperMode</code></td><td><code>'fluid' \| 'fixed'</code></td><td><code>'fluid'</code></td><td>宽屏时版心随容器生长（两侧留白恒定）/ 恒定 <code>paperWidth + 64</code></td></tr>
+            <tr><td><code>paperGap</code></td><td><code>number</code></td><td><code>24</code></td><td><code>fluid</code> 模式下单侧留白（px）</td></tr>
+            <tr><td><code>paperMaxWidth</code></td><td><code>number</code></td><td><code>0</code></td><td><code>fluid</code> 模式下版心最大宽度，<code>0</code> = 不限</td></tr>
+            <tr><td><code>primaryColor</code></td><td><code>string</code></td><td><code>'#07c160'</code></td><td>主题色（CSS 变量 <code>--ke-primary</code>）</td></tr>
+            <tr><td><code>toolbar</code></td><td><code>string[] \| false</code></td><td><code>DEFAULT_TOOLBAR</code></td><td>工具栏项，见 <a href="#toolbar">工具栏项</a>；<code>false</code> 隐藏</td></tr>
+            <tr><td><code>customButtons</code></td><td><code>CustomButtonSpec[]</code></td><td><code>[]</code></td><td>自定义工具栏按钮，见 <a href="#custom-buttons">自定义工具栏按钮</a></td></tr>
+            <tr><td><code>hideToolbar</code></td><td><code>boolean</code></td><td><code>false</code></td><td>隐藏工具栏</td></tr>
+            <tr><td><code>hideStatusbar</code></td><td><code>boolean</code></td><td><code>false</code></td><td>隐藏底部状态栏</td></tr>
+            <tr><td><code>readOnly</code></td><td><code>boolean</code></td><td><code>false</code></td><td>只读</td></tr>
+            <tr><td><code>autofocus</code></td><td><code>boolean</code></td><td><code>false</code></td><td>创建后自动聚焦</td></tr>
+            <tr><td><code>maxLength</code></td><td><code>number</code></td><td><code>0</code></td><td>超出后提示（软限制，不截断输入）</td></tr>
+            <tr><td><code>wordCount</code></td><td><code>boolean</code></td><td><code>true</code></td><td>底部字数 / 媒体统计</td></tr>
+            <tr><td><code>sanitize</code></td><td><code>boolean</code></td><td><code>true</code></td><td>初始化与 <code>setContent</code> 时净化 HTML</td></tr>
+            <tr><td><code>historyLimit</code></td><td><code>number</code></td><td><code>60</code></td><td>撤销栈深度</td></tr>
+            <tr>
+              <td><code>uploader</code></td>
+              <td><code>string \| object \| fn \| SimpleUploader</code></td>
+              <td><code>'mock'</code></td>
+              <td><strong>普通上传</strong>（整个文件一次请求）：直接给接口地址（如 <code>'/api/upload'</code>）即可；也可 <code>{type:'http', url}</code> / 自定义 adapter / 函数。只配本项时不启用分片上传</td>
+            </tr>
+            <tr>
+              <td><code>chunkUploader</code></td>
+              <td><code>string \| object \| fn \| ChunkUploader</code></td>
+              <td><code>'mock'</code></td>
+              <td><strong>分片上传</strong>（切片并发，只打一个接口，响应里 <code>url</code> 非空即成功）；<code>null</code> 表示不启用分片。与 <code>uploader</code> 都配置时按 <code>upload.mode</code> 选路；只配本项时 <code>mode</code> 自动为 <code>'chunk'</code></td>
+            </tr>
+            <tr>
+              <td><code>upload</code></td>
+              <td><code>object</code></td>
+              <td><code>{mode:'auto', chunkThreshold:5MB, chunkSize:1MB, concurrency:3, retries:2, fingerprint:'fast'}</code></td>
+              <td>链路与分片参数；<code>mode</code> 为 <code>'auto'</code>（按体积）/ <code>'normal'</code>（只普通）/ <code>'chunk'</code>（只分片），另支持 <code>completeOnUrl</code> 覆盖「响应带 url 即成功」判定</td>
+            </tr>
+            <tr><td><code>image.compress</code></td><td><code>object\|false</code></td><td><code>{maxWidth:1440, quality:0.85, minSize:300KB}</code></td><td>上传前大图压缩</td></tr>
+            <tr><td><code>maxImageSize</code></td><td><code>number</code></td><td><code>20MB</code></td><td>图片体积上限，超限拦截</td></tr>
+            <tr><td><code>maxVideoSize</code></td><td><code>number</code></td><td><code>512MB</code></td><td>视频体积上限</td></tr>
+            <tr><td><code>imageAccept</code> / <code>videoAccept</code></td><td><code>string</code></td><td>常见图/视频类型</td><td>文件选择器 <code>accept</code></td></tr>
+            <tr><td><code>code.languages</code></td><td><code>string[]</code></td><td><code>[]</code></td><td>代码块可选语言（主名或别名，如 <code>['js','mysql','yml']</code>）；留空 = 全部 20 种</td></tr>
+            <tr><td><code>code.defaultLanguage</code></td><td><code>string</code></td><td><code>'plaintext'</code></td><td>新建代码块的默认语言；不在 <code>languages</code> 内会落到清单第一项</td></tr>
+            <tr><td><code>code.highlight</code></td><td><code>boolean</code></td><td><code>true</code></td><td>是否语法高亮；<code>false</code> 时只保留纯文本（语言标记照写）</td></tr>
+            <tr><td><code>markdown.insertMode</code></td><td><code>'replace'\|'append'\|'cursor'</code></td><td><code>'replace'</code></td><td>Markdown 导入默认落点：替换全文 / 追加文末 / 插入光标（面板里可临时改）</td></tr>
+            <tr><td><code>markdown.maxSize</code></td><td><code>number</code></td><td><code>5MB</code></td><td>单个 Markdown 文件体积上限（字节），<code>0</code> = 不限制</td></tr>
+            <tr><td><code>markdown.gfm</code></td><td><code>boolean</code></td><td><code>true</code></td><td>GFM 扩展：表格 / 删除线 / 任务列表 / 裸链接</td></tr>
+            <tr><td><code>markdown.breaks</code></td><td><code>boolean</code></td><td><code>false</code></td><td>段落内单换行是否转 <code>&lt;br&gt;</code></td></tr>
+            <tr><td><code>markdown.linkTarget</code></td><td><code>boolean\|string</code></td><td><code>false</code></td><td>外链自动加 <code>target</code> + <code>rel="noopener noreferrer"</code></td></tr>
+            <tr><td><code>markdown.frontMatter</code></td><td><code>boolean</code></td><td><code>true</code></td><td>丢弃开头的 YAML front matter</td></tr>
+            <tr><td><code>paste.enabled</code></td><td><code>boolean</code></td><td><code>true</code></td><td>接管粘贴</td></tr>
+            <tr><td><code>paste.clean</code></td><td><code>boolean</code></td><td><code>true</code></td><td>粘贴内容净化（Word/WPS 自动清洗）</td></tr>
+            <tr><td><code>paste.uploadFiles</code></td><td><code>boolean</code></td><td><code>true</code></td><td>粘贴截图/文件即上传</td></tr>
+            <tr><td><code>paste.localizeImages</code></td><td><code>boolean</code></td><td><code>false</code></td><td>尝试把外链图片下载后本地化</td></tr>
+          </tbody>
+        </table>
+      </div>
+
+      <h3>回调</h3>
+
+      <div class="table-wrap">
+        <table class="data">
+          <thead>
+            <tr><th>回调</th><th>签名</th><th>说明</th></tr>
+          </thead>
+          <tbody>
+            <tr><td><code>onChange</code></td><td><code>(html, editor)</code></td><td>内容变化（160ms 防抖）</td></tr>
+            <tr><td><code>onReady</code></td><td><code>(editor)</code></td><td>实例可用</td></tr>
+            <tr><td><code>onError</code></td><td><code>(error)</code></td><td>内部异常</td></tr>
+            <tr><td><code>onUpload</code></td><td><code>({stage, file, kind, url, percent, info})</code></td><td><code>uploadstart</code> / <code>uploaddone</code> / <code>uploaderror</code> / <code>uploadcancel</code></td></tr>
+            <tr><td><code>beforeUpload</code></td><td><code>(file, kind)</code></td><td>返回 <code>File</code> 改写、<code>false</code> 拦截（加水印、二次校验等）</td></tr>
+          </tbody>
+        </table>
+      </div>
+
+      <!-- ------------------------------------------------------------ -->
+      <h2 id="toolbar">工具栏项</h2>
+
+      <p>可用的内置名字：</p>
+
+      <div class="code-block">
+        <div class="code-block__head">
+          <span>内置工具栏项</span>
+          <button class="copy-btn" type="button">复制</button>
+        </div>
+<pre><code>undo  redo  heading  fontsize  bold  italic  underline  strike  foreColor  backColor
+alignLeft  alignCenter  alignRight  alignJustify  ul  ol  quote  link  image  video
+table  code  markdown  hr  clear  source  preview  fullscreen
+
+|        分隔符
+:tail    右对齐标记（其后的按钮吸附在工具栏右端）</code></pre>
+      </div>
+
+      <p>此外可放入 <code>customButtons</code> 里定义的<strong>按钮 <code>name</code></strong>（如 <code>toolbar: ['bold', '|', 'tpl']</code>）。<strong>未传 <code>toolbar</code> 时，自定义按钮会自动插入工具栏</strong>：写了 <code>position</code> 按 <code>position</code> 放，没写则追加到主区末尾（插在 <code>:tail</code> 之前）。</p>
+
+      <div class="code-block">
+        <div class="code-block__head">
+          <span>自定义工具栏</span>
+          <button class="copy-btn" type="button">复制</button>
+        </div>
+<pre><code>toolbar: ['undo', 'redo', '|', 'bold', 'italic', '|', 'image', 'video', ':tail', 'source']</code></pre>
+      </div>
+
+      <p>工具栏始终单行显示，放不下时可<strong>左右滑动</strong>，并有四重提示保证可发现性：</p>
+
+      <div class="table-wrap">
+        <table class="data">
+          <thead>
+            <tr><th>提示</th><th>作用</th></tr>
+          </thead>
+          <tbody>
+            <tr><td>常显滚动条</td><td>静止时也能从滑块长度看出「还有更多工具」</td></tr>
+            <tr><td>尾部左缘渐隐 + 阴影</td><td>明确表达「有工具正藏在这块底下」，滑到最右自动消失</td></tr>
+            <tr><td>左缘渐隐</td><td>已向右滑出时提示左边还有内容</td></tr>
+            <tr><td>首次引导气泡</td><td>「工具栏可左右滑动」，3.8s 后或首次滑动后消失，<code>localStorage</code> 记忆不重复弹</td></tr>
+          </tbody>
+        </table>
+      </div>
+
+      <p>鼠标还可<strong>直接按住拖动</strong>平移工具栏（光标变为抓握状）；触屏沿用系统原生滑动。<code>:tail</code> 之后的「导入MD / 源码 / 全屏」（以及 <code>position:'tail'</code> 的自定义按钮）始终吸附在右端可见。</p>
+
+      <h3>下拉面板一览</h3>
+
+      <div class="table-wrap">
+        <table class="data">
+          <thead>
+            <tr><th>按钮</th><th>点击行为</th><th>面板内容</th></tr>
+          </thead>
+          <tbody>
+            <tr><td><code>heading</code></td><td>展开「段落样式」面板</td><td>正文 / 标题一 / 标题二 / 标题三，每档给出<strong>真实字号预览 + 用途说明</strong>，按钮文案跟随当前段落</td></tr>
+            <tr><td><code>fontsize</code></td><td>展开「字号」面板</td><td>12–32px 网格，当前字号高亮</td></tr>
+            <tr><td><code>foreColor</code></td><td><strong>一次点击直接展开颜色面板</strong></td><td>最近使用（本次会话）+ 主题颜色 + 标准颜色，色块带中文名称 tooltip，底部为取色器 + HEX 输入 + 应用；右上角「恢复默认」清除上色</td></tr>
+            <tr><td><code>backColor</code></td><td>同上（底色）</td><td>推荐底色 + 主题颜色 + 自定义；按钮上的「A」用当前底色做高亮示意</td></tr>
+            <tr><td><code>image</code> / <code>video</code></td><td>展开插入面板</td><td>两个页签：<strong>本地上传</strong>（点击或拖拽到虚线区）/ <strong>网络链接</strong>（粘贴地址即可插入，附带可访问性校验提示）</td></tr>
+            <tr><td><code>table</code></td><td>展开网格</td><td>10×8 规格选择，实时显示「N 列 × M 行」</td></tr>
+            <tr><td><code>link</code></td><td>展开表单</td><td>文字 / 地址 / 新窗口打开，已链接时提供「移除链接」</td></tr>
+            <tr><td><code>code</code></td><td>展开「插入代码块 / 代码块语言」面板</td><td>20 种语言列表（含一句话说明），支持按名称/别名搜索与键盘回车；<strong>光标不在代码块内</strong>=插入新块，<strong>光标在块内</strong>=改写该块语言</td></tr>
+            <tr><td><code>markdown</code></td><td>展开「导入 Markdown」面板（按钮文案：导入MD）</td><td>两个页签：<strong>选择文件</strong>（点击或拖拽到虚线区，<code>.md/.markdown/.txt</code>，自动识别编码）/ <strong>粘贴文本</strong>；下方为三种落点 + <strong>实时转换预览</strong>与结构统计；标题栏显示字符数，底部「导入到正文」</td></tr>
+          </tbody>
+        </table>
+      </div>
+
+      <p class="tabs__note">面板统一样式：圆角卡片 + 标题栏 + 分区小标题 + 入场动画；打开时会自动记录正文选区，操作后还原，因此<strong>先选文字再点颜色</strong>一定生效。</p>
+
+      <h3>图片缩放与对齐</h3>
+
+      <p>点击正文中的图片会浮出气泡工具条（对齐 / 宽度 30%·60%·100% / 圆角 / 查看大图 / 替换 / 删除），同时图片<strong>右下角出现圆形拖拽把手</strong>：</p>
+
+      <ul>
+        <li>按住把手左右拖动，实时按<strong>容器宽度百分比</strong>等比缩放，顶部浮层显示当前宽度（如 <code>58%</code>）</li>
+        <li>范围限制 15%–100%，不会拖出正文版心；松开即写入撤销栈，可 <code>⌘/Ctrl+Z</code> 回退</li>
+        <li>把手与浮层挂在编辑器容器上，<strong>不进入内容区</strong>，不会污染 <code>getHTML()</code> 导出与历史快照</li>
+        <li>视频卡片不支持拖拽缩放（保持固定比例），可用气泡工具条的「窄版 / 宽版」切换</li>
+      </ul>
+
+      <p>选中图片后，<strong>工具栏的「左对齐 / 居中 / 右对齐」与气泡工具条的对齐按钮效果完全一致</strong> —— 都作用于图片本身（<code>img</code> 为块级元素，靠 <code>margin:auto</code> 定位），而非所在段落。图片宽度为 100% 时居中无视觉差异，<strong>先缩小再居中</strong>即可看到效果。</p>
+
+      <h3>快捷键</h3>
+
+      <div class="table-wrap">
+        <table class="data">
+          <thead>
+            <tr><th>快捷键</th><th>作用</th></tr>
+          </thead>
+          <tbody>
+            <tr><td><code>⌘/Ctrl + B / I / U</code></td><td>加粗 / 斜体 / 下划线</td></tr>
+            <tr><td><code>⌘/Ctrl + K</code></td><td>插入链接</td></tr>
+            <tr><td><code>⌘/Ctrl + Shift + K</code></td><td>切换 HTML 源码模式</td></tr>
+            <tr><td><code>⌘/Ctrl + Z</code> / <code>Shift + Z</code> / <code>Y</code></td><td>撤销 / 重做</td></tr>
+            <tr><td><code>⌘/Ctrl + S</code></td><td>触发 <code>save</code> 事件</td></tr>
+            <tr><td><code>Esc</code></td><td>关闭面板 / 退出预览</td></tr>
+          </tbody>
+        </table>
+      </div>
+
+      <!-- ------------------------------------------------------------ -->
+      <h2 id="custom-buttons">自定义工具栏按钮</h2>
+
+      <p>一个 <code>customButtons</code> 条目 = 一个工具栏按钮。<code>type: 'select'</code>（默认，下拉选择）或 <code>type: 'button'</code>（普通按钮）。</p>
+
+      <h3>CustomButtonSpec</h3>
+
+      <div class="table-wrap">
+        <table class="data">
+          <thead>
+            <tr><th>字段</th><th>类型</th><th>默认</th><th>说明</th></tr>
+          </thead>
+          <tbody>
+            <tr><td><code>name</code></td><td><code>string</code></td><td>—</td><td><strong>必填</strong>，唯一标识；在 <code>toolbar</code> 数组里用它定位，也是事件载荷的 <code>name</code></td></tr>
+            <tr><td><code>position</code></td><td><code>number \| 'start' \| 'end' \| 'tail' \| string \| {before} \| {after}</code></td><td><code>'end'</code></td><td>按钮在工具栏中的位置，见下表（别名：<code>at</code> / <code>before</code> / <code>after</code> / <code>index</code>）</td></tr>
+            <tr><td><code>type</code></td><td><code>'select' \| 'button'</code></td><td><code>'select'</code></td><td>下拉选择 / 普通按钮</td></tr>
+            <tr><td><code>title</code></td><td><code>string</code></td><td><code>text</code></td><td>按钮 tooltip，同时作为面板标题</td></tr>
+            <tr><td><code>text</code></td><td><code>string</code></td><td><code>''</code></td><td>按钮文字；下拉按钮选中后会换成选项文字</td></tr>
+            <tr><td><code>placeholder</code></td><td><code>string</code></td><td><code>text</code></td><td>未选中时的按钮文字</td></tr>
+            <tr><td><code>icon</code></td><td><code>string</code></td><td><code>''</code></td><td>内置图标名（<code>link</code>/<code>image</code>/<code>plus</code>…）或原始 SVG 字符串</td></tr>
+            <tr><td><code>width</code></td><td><code>number</code></td><td>自适应</td><td>面板宽度 px（限定 200–420）</td></tr>
+            <tr><td><code>searchable</code></td><td><code>boolean</code></td><td><code>false</code></td><td>面板内搜索框（对 label/desc/value/group 客户端过滤）</td></tr>
+            <tr><td><code>note</code></td><td><code>string</code></td><td><code>''</code></td><td>面板右上角说明文字（未搜索时显示）</td></tr>
+            <tr><td><code>emptyText</code></td><td><code>string</code></td><td><code>'暂无数据'</code></td><td>空数据提示</td></tr>
+            <tr><td><code>cache</code></td><td><code>boolean</code></td><td><code>true</code></td><td>缓存接口结果；面板右上角刷新按钮可强制重拉</td></tr>
+            <tr><td><code>keepValue</code></td><td><code>boolean</code></td><td><code>true</code></td><td>记住选中项并回显到按钮文字</td></tr>
+            <tr><td><code>options</code></td><td><code>Option[]</code></td><td>—</td><td><strong>数据源①</strong> 静态配置</td></tr>
+            <tr><td><code>load</code></td><td><code>(editor) =&gt; Option[] \| Promise</code></td><td>—</td><td><strong>数据源②</strong> 自定义函数（优先级最高）</td></tr>
+            <tr><td><code>url</code></td><td><code>string</code></td><td>—</td><td><strong>数据源③</strong> 接口地址，内部 <code>fetch</code></td></tr>
+            <tr><td><code>fetchOptions</code></td><td><code>object</code></td><td><code>{}</code></td><td><code>{method, headers, body, credentials, timeout, fetch, parser}</code>；<code>timeout</code> 默认 10000ms</td></tr>
+            <tr><td><code>pick</code></td><td><code>(payload, editor) =&gt; any[]</code></td><td>自动</td><td>从响应里提取数组</td></tr>
+            <tr><td><code>link</code></td><td>见下</td><td>—</td><td>跳转链接配置</td></tr>
+            <tr><td><code>insert</code></td><td><code>'auto' \| 'link' \| 'html' \| 'text' \| false</code></td><td><code>'auto'</code></td><td>插入方式；<code>auto</code> = 链接 &gt; <code>item.html</code> &gt; 纯文本；<code>false</code> 不改正文</td></tr>
+            <tr><td><code>onSelect</code></td><td><code>(item, ctx) =&gt; any</code></td><td>—</td><td>选中回调；<strong>返回 <code>false</code> 则跳过默认插入</strong></td></tr>
+            <tr><td><code>onClick</code></td><td><code>({editor, name}) =&gt; any</code></td><td>—</td><td><code>type:'button'</code> 的点击回调</td></tr>
+            <tr><td><code>active</code> / <code>enabled</code></td><td><code>(state, editor) =&gt; boolean</code></td><td>—</td><td>按钮高亮 / 可用条件</td></tr>
+          </tbody>
+        </table>
+      </div>
+
+      <div class="callout callout--tip">
+        <svg class="callout__icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 3l7.5 3.4v5.2c0 4.4-3 8-7.5 9.4-4.5-1.4-7.5-5-7.5-9.4V6.4L12 3Z"></path><path d="M9 12.2l2.2 2.2L15.5 10"></path></svg>
+        <p><strong>数据源优先级：<code>load</code> &gt; <code>url</code> &gt; <code>options</code></strong>。同时配置多项时只生效优先级最高的那个。</p>
+      </div>
+
+      <h3>按钮位置 position</h3>
+
+      <div class="table-wrap">
+        <table class="data">
+          <thead>
+            <tr><th>写法</th><th>效果</th></tr>
+          </thead>
+          <tbody>
+            <tr><td>不写 / <code>'end'</code></td><td>主区末尾，插在右侧吸附尾栏之前（多个未定位按钮共用一个分隔符）</td></tr>
+            <tr><td><code>'start'</code></td><td>工具栏第一位</td></tr>
+            <tr><td><code>'tail'</code></td><td>尾栏末尾（与「导入MD / 源码 / 全屏」同区；未启用 <code>:tail</code> 时回退主区末尾）</td></tr>
+            <tr><td><code>number</code></td><td>第 n 个按钮之前（0 起，按视觉顺序，分隔符不计数）</td></tr>
+            <tr><td><code>'image'</code> 等按钮名</td><td>插到该按钮之前</td></tr>
+            <tr><td><code>{ before: name }</code> / <code>{ after: name }</code></td><td>显式锚点；锚点可以是内置按钮，也可以是另一个自定义按钮</td></tr>
+          </tbody>
+        </table>
+      </div>
+
+      <ul>
+        <li>锚点找不到 → 自动回退主区末尾，不报错、不丢按钮。</li>
+        <li><code>toolbar</code> 数组里已写过该 <code>name</code> → 以数组位置为准（<code>position</code> 忽略）。</li>
+        <li>显式定位不插入额外分隔符；仅默认追加时会带一个 <code>|</code>。</li>
+        <li>运行时可用 <code>editor.moveButton(name, where)</code> 移动<strong>任意</strong>按钮（包括内置按钮）。</li>
+      </ul>
+
+      <h3>选项对象</h3>
+
+      <p>字段自动归一，接口原始结构一般无需转换：</p>
+
+      <div class="table-wrap">
+        <table class="data">
+          <thead>
+            <tr><th>字段</th><th>别名（自动识别）</th><th>说明</th></tr>
+          </thead>
+          <tbody>
+            <tr><td><code>value</code></td><td><code>id</code> <code>key</code> <code>val</code> <code>code</code></td><td>唯一值，用于占位符与 <code>setButtonValue</code></td></tr>
+            <tr><td><code>label</code></td><td><code>text</code> <code>name</code> <code>title</code></td><td>主标题</td></tr>
+            <tr><td><code>desc</code></td><td><code>description</code> <code>sub</code> <code>subtitle</code> <code>tip</code></td><td>副标题说明</td></tr>
+            <tr><td><code>url</code></td><td><code>href</code> <code>link</code> <code>jumpUrl</code> <code>jump</code></td><td>该项自带地址（<code>link: true</code> 时使用）</td></tr>
+            <tr><td><code>group</code></td><td>—</td><td>分组名，同组归到一个小标题下</td></tr>
+            <tr><td><code>html</code></td><td>—</td><td>选中后直接插入的 HTML（<code>insert: 'html'</code>）</td></tr>
+            <tr><td><code>disabled</code></td><td>—</td><td>置灰不可选</td></tr>
+          </tbody>
+        </table>
+      </div>
+
+      <p>也支持纯字符串数组：<code>options: ['开场白', '结束语']</code>。</p>
+
+      <h3>数据源写法</h3>
+
+      <div class="code-block">
+        <div class="code-block__head">
+          <span>三种数据源</span>
+          <button class="copy-btn" type="button">复制</button>
+        </div>
+<pre><code>// 方式 A：静态数组（也支持纯字符串、或接口原始对象，字段自动归一）
+{ options: [{ value: 'a', label: '选项 A', desc: '说明', url: 'https://x.com/a' }] }
+{ options: ['选项 A', '选项 B'] }
+
+// 方式 B：自定义函数（可异步，能用编辑器实例与闭包里的 axios / 鉴权头）
+{ load: async () =&gt; (await fetch('/api/tags').then((r) =&gt; r.json()))
+    .map((t) =&gt; ({ value: t.id, label: t.name })) }
+
+// 方式 C：直接给接口地址
+{
+  url: '/api/columns',
+  fetchOptions: { method: 'POST', headers: { Authorization: 'Bearer x' }, body: '{}', timeout: 8000 },
+  pick: (json) =&gt; json.result.records,   // 结构特殊时手动提取数组
+}</code></pre>
+      </div>
+
+      <ul>
+        <li><strong>缓存</strong>：默认只请求一次，面板右上角的刷新按钮可强制重新拉取；<code>cache: false</code> 则每次打开都请求</li>
+        <li><strong>加载态</strong>：面板自动显示 spinner + 骨架屏；<strong>失败</strong>时显示错误文案与「重试」按钮；<strong>空数据</strong>可用 <code>emptyText</code> 自定义提示</li>
+        <li><strong>在编辑器外部拿数据</strong>（Vue / React 里自己请求）：<code>editor.setButtonOptions('column', list)</code></li>
+      </ul>
+
+      <h3>link 写法</h3>
+
+      <div class="table-wrap">
+        <table class="data">
+          <thead>
+            <tr><th>写法</th><th>效果</th></tr>
+          </thead>
+          <tbody>
+            <tr><td><code>link: true</code></td><td>用每项自带地址（<code>url</code>/<code>href</code> 字段）</td></tr>
+            <tr><td><code>link: 'https://x.com/{value}'</code></td><td>地址模板</td></tr>
+            <tr><td><code>link: { url, text, target, mode, title }</code></td><td>完整配置</td></tr>
+            <tr><td><code>link: (item, editor) =&gt; ({ url, text, target })</code></td><td>完全动态</td></tr>
+          </tbody>
+        </table>
+      </div>
+
+      <ul>
+        <li><code>mode: 'insert'</code>（默认）在光标处插入 <code>&lt;a&gt;</code>；<code>target: '_blank'</code>（默认）时自动加 <code>rel="noopener noreferrer"</code></li>
+        <li><code>mode: 'open'</code> 直接 <code>window.open(url, '_blank', 'noopener,noreferrer')</code>，不改动正文</li>
+        <li>模板占位符 <code>{value}</code> <code>{label}</code> 以及选项的<strong>任意字段</strong>都会被替换（取自原始对象）</li>
+        <li><strong>安全</strong>：地址经白名单校验，<code>javascript:</code> / <code>vbscript:</code> / <code>file:</code> / 危险 <code>data:</code> 一律不生成链接（退化为插入纯文本）</li>
+      </ul>
+
+      <h3>onSelect 的 ctx</h3>
+
+      <div class="code-block">
+        <div class="code-block__head">
+          <span>ctx 提供的能力</span>
+          <button class="copy-btn" type="button">复制</button>
+        </div>
+<pre><code>onSelect: (item, ctx) =&gt; {
+  ctx.editor                 // 编辑器实例
+  ctx.item                   // 选中项（归一后）
+  ctx.link                   // 解析后的链接，无链接时为 null
+  ctx.insertLink(override)   // 插入链接（可覆盖字段）
+  ctx.insertHtml(html)       // 插入 HTML
+  ctx.insertText(text)       // 插入纯文本
+  ctx.open(url, target)      // 新窗口打开
+  return false               // 已自行处理，跳过默认插入
+}</code></pre>
+      </div>
+
+      <h3>示例</h3>
+
+      <div class="code-block">
+        <div class="code-block__head">
+          <span>三种典型按钮</span>
+          <button class="copy-btn" type="button">复制</button>
+        </div>
+<pre><code>KEditor.create('#editor', {
+  customButtons: [
+    { name: 'column', text: '栏目', searchable: true, url: '/api/columns', link: true, insert: 'link' },
+    {
+      name: 'tpl', text: '模板', icon: 'plus',
+      options: [{ value: 'opening', label: '开场白', desc: '问候 + 导读', group: '通用' }],
+      link: { url: 'https://mp.weixin.qq.com/s/tpl-{value}', text: '【{label}】' },
+      onSelect: (item) =&gt; track('tpl', item.value),
+    },
+    {
+      name: 'date', type: 'button', text: '日期',
+      onClick: ({ editor }) =&gt; editor.commands.insertHTML('&lt;p&gt;2026-10-13&lt;/p&gt;'),
+    },
+  ],
+})</code></pre>
+      </div>
+
+      <!-- ------------------------------------------------------------ -->
+      <h2 id="code">代码块（语言 + 语法高亮）</h2>
+
+      <p>内置 20 种语言（<code>plaintext</code> <code>javascript</code> <code>typescript</code> <code>html</code> <code>css</code> <code>json</code> <code>python</code> <code>java</code> <code>go</code> <code>rust</code> <code>c</code> <code>csharp</code> <code>php</code> <code>ruby</code> <code>sql</code> <code>bash</code> <code>yaml</code> <code>ini</code> <code>markdown</code> <code>diff</code>），并支持别名（<code>js</code> <code>ts</code> <code>py</code> <code>golang</code> <code>yml</code> <code>sh</code> <code>md</code> <code>c++</code> <code>cs</code> <code>mysql</code> <code>toml</code> …）。</p>
+
+      <div class="code-block">
+        <div class="code-block__head">
+          <span>代码块 API</span>
+          <button class="copy-btn" type="button">复制</button>
+        </div>
+<pre><code>// 插入（lang 可省，用 options.code.defaultLanguage）
+editor.insertCode('const a = 1', 'js')
+// =&gt; &lt;pre data-k-lang="javascript"&gt;&lt;code class="language-javascript"&gt;…&lt;/code&gt;&lt;/pre&gt;
+
+// 改写光标所在块的语言（返回生效语言；不在代码块内返回 null）
+editor.setCodeLanguage('sql')
+editor.getCodeLanguage()                    // 'sql'；不在块内为 ''
+
+editor.codeLanguages()                      // [{ value, label, hint }, …]（受 options.code.languages 裁剪）
+editor.highlightCode()                      // 手动重跑全量高亮，返回处理的代码块数量
+editor.lastCodeLang                         // 最近一次选择的语言（下次插入默认沿用）
+editor.getState().inCode                    // 光标是否在代码块内</code></pre>
+      </div>
+
+      <p>标记与产物约定：</p>
+
+      <ul>
+        <li>语言同时写在 <code>&lt;pre data-k-lang="javascript"&gt;</code> 与 <code>&lt;code class="language-javascript"&gt;</code>；外部 HTML 只带 <code>class="language-xxx"</code> 也能识别并补上标记</li>
+        <li>块右上角显示语言角标（<code>data-k-lang</code>，<code>plaintext</code> 不显示），纯 CSS 实现，不进入 <code>getHTML()</code></li>
+        <li><strong>高亮只在编辑器/预览里显示</strong>：<code>getHTML()</code>、源码模式、复制出去的 HTML 都是不含 token <code>&lt;span&gt;</code> 的干净代码，重新导入会自动重新高亮；预览面板走 <code>getHTML({ clean: 'preview' })</code>（同样清理内部属性，但保留高亮）</li>
+        <li>在块内打字会（防抖 140ms）重新高亮并保持块内光标；输入法组字期间跳过；单块超过 60 KB 退化为纯文本</li>
+        <li>样式类名 <code>ke-tok-{kw,str,com,num,typ,fn,op,var,tag,attr,sel,prop,key,bool,meta,ins,del}</code>，作用域限定在 <code>.ke-content</code> 内，宿主可覆盖配色</li>
+      </ul>
+
+      <!-- ------------------------------------------------------------ -->
+      <h2 id="markdown">导入 Markdown</h2>
+
+      <p>尾栏「导入MD」按钮打开导入面板（选文件 / 粘文本 + 实时预览 + 结构统计 + 三种落点）；把 <code>.md</code> / <code>.markdown</code> / <code>.txt</code> 文件拖进正文也会自动转换（默认替换全文）。转换产物就是正文规范里的普通 HTML，围栅代码块会带上 <code>data-k-lang</code> 并高亮。</p>
+
+      <div class="code-block">
+        <div class="code-block__head">
+          <span>纯函数（不依赖实例）</span>
+          <button class="copy-btn" type="button">复制</button>
+        </div>
+<pre><code>markdownToHtml('# 标题\n\n正文', { gfm: true })  // =&gt; '&lt;h1&gt;标题&lt;/h1&gt;\n&lt;p&gt;正文&lt;/p&gt;'
+
+markdownSummary(html)
+// =&gt; { headings, paragraphs, lists, items, codeBlocks, quotes, tables, images, links }
+
+isMarkdownFile({ name: 'a.md', type: '' })       // =&gt; true（按 MIME + 扩展名，.txt 也算）
+readMarkdownFile(file)                           // =&gt; 文本（严格 UTF-8 失败时回退 gb18030 / gbk / big5）
+normalizeInsertMode('append')                    // =&gt; 'append'（非法值 =&gt; 'replace')
+MARKDOWN_ACCEPT                                  // &lt;input accept&gt; 用</code></pre>
+      </div>
+
+      <p>实例方法见 <a href="#instance">实例属性与方法</a> 中的 <code>importMarkdown</code> / <code>setMarkdown</code> / <code>insertMarkdown</code> / <code>appendMarkdown</code> / <code>markdownOptions</code>；导入成功会触发 <code>markdownimport</code> 事件。</p>
+
+      <!-- ------------------------------------------------------------ -->
+      <h2 id="instance">实例属性与方法</h2>
+
+      <div class="code-block">
+        <div class="code-block__head">
+          <span>实例属性</span>
+          <button class="copy-btn" type="button">复制</button>
+        </div>
+<pre><code>editor.id                     // 实例 id
+editor.el                     // 最外层容器
+editor.root                   // contenteditable 节点
+editor.options                // 合并后的配置
+editor.commands               // 指令集（可程序化调用）
+editor.media                  // 上传/媒体管理
+editor.uploader               // UploadPipeline：按 upload.mode / 体积自动选路（.pick(file) 可查询）
+editor.uploaders              // { normal: SimpleUploader, chunk: ChunkUploader | null }
+editor.history                // 撤销栈
+editor.readOnly / sourceMode / previewMode / fullscreen
+editor.lastCodeLang           // 最近选择的代码块语言</code></pre>
+      </div>
+
+      <div class="table-wrap">
+        <table class="data">
+          <thead>
+            <tr><th>方法</th><th>说明</th></tr>
+          </thead>
+          <tbody>
+            <tr><td><code>getHTML({clean?})</code></td><td>取当前 HTML，默认剔除编辑器内部属性、未完成占位块；<code>clean: false</code> 取原始 HTML（调试用），<code>clean: 'preview'</code> 保留代码高亮</td></tr>
+            <tr><td><code>getText()</code></td><td>纯文本</td></tr>
+            <tr><td><code>getJSON()</code></td><td><code>{html, text, counts}</code></td></tr>
+            <tr><td><code>setContent(html, {sanitize?, silent?})</code></td><td>覆盖内容</td></tr>
+            <tr><td><code>appendHTML(html)</code></td><td>在光标处插入</td></tr>
+            <tr><td><code>clear()</code></td><td>清空并取消所有上传</td></tr>
+            <tr><td><code>focus()</code> / <code>blur()</code></td><td>聚焦 / 失焦</td></tr>
+            <tr><td><code>setReadOnly(bool)</code></td><td>切换只读</td></tr>
+            <tr><td><code>undo()</code> / <code>redo()</code></td><td>撤销 / 重做（含光标位置恢复）</td></tr>
+            <tr><td><code>insertImage(url, alt?)</code> / <code>insertVideo(url, label?)</code></td><td>按地址插入媒体（等同工具栏「网络链接」页签）</td></tr>
+            <tr><td><code>insertCode(code?, lang?)</code></td><td>插入代码块，光标落在块内（<code>lang</code> 省则用 <code>options.code.defaultLanguage</code>）</td></tr>
+            <tr><td><code>setCodeLanguage(lang, target?)</code></td><td>改写代码块语言并重新高亮（<code>target</code> 省则取光标所在块）；返回生效语言，未命中返回 <code>null</code></td></tr>
+            <tr><td><code>getCodeLanguage()</code></td><td>光标所在代码块的语言，不在块内返回 <code>''</code></td></tr>
+            <tr><td><code>codeLanguages()</code></td><td>语言清单 <code>[{value,label,hint}]</code>（受 <code>options.code.languages</code> 裁剪）</td></tr>
+            <tr><td><code>highlightCode()</code></td><td>手动重跑正文全量高亮，返回处理的代码块数量</td></tr>
+            <tr><td><code>importMarkdown(source, {mode?, silent?})</code></td><td>导入 Markdown（<code>source</code> 可为文本 / <code>File</code> / <code>{name,content}</code>）并转为 HTML，返回 <code>{ok, html, summary, mode, chars, name}</code>；失败为 <code>{ok:false, reason:'readonly'\|'error'}</code></td></tr>
+            <tr><td><code>setMarkdown(source)</code> / <code>insertMarkdown(source)</code> / <code>appendMarkdown(source)</code></td><td>导入并分别替换全文 / 插入光标处 / 追加文末（等价于 <code>importMarkdown</code> + 指定 <code>mode</code>），均可 <code>await</code></td></tr>
+            <tr><td><code>markdownOptions()</code></td><td>当前导入配置 <code>{insertMode, maxSize, auto}</code></td></tr>
+            <tr><td><code>moveCaretToEnd()</code></td><td>光标 / 选区移到正文末尾（追加导入前的落点）</td></tr>
+            <tr><td><code>upload(file, kind?)</code></td><td>手动触发一次上传（自动判断图片/视频）</td></tr>
+            <tr><td><code>cancelUploads()</code></td><td>取消全部进行中任务</td></tr>
+            <tr><td><code>counts()</code></td><td><code>{chars, words, images, videos, uploading}</code></td></tr>
+            <tr><td><code>enterSource()</code> / <code>exitSource()</code> / <code>toggleSource()</code></td><td>源码模式</td></tr>
+            <tr><td><code>openPreview()</code> / <code>closePreview()</code> / <code>togglePreview()</code></td><td>预览模式（默认工具栏已无预览按钮，走 API 或自行配置 <code>toolbar</code>）</td></tr>
+            <tr><td><code>toggleFullscreen()</code></td><td>全屏编辑</td></tr>
+            <tr><td><code>addButton(spec, place?)</code> / <code>moveButton(name, where)</code> / <code>removeButton(name)</code></td><td>工具栏按钮增 / 移 / 删</td></tr>
+            <tr><td><code>setButtonOptions(name, items)</code></td><td>外部灌入数据（成为权威数据，不被旧请求覆盖）</td></tr>
+            <tr><td><code>getButtonValue(name)</code> / <code>setButtonValue(name, value)</code></td><td>读 / 设当前选中项（按钮文案同步）</td></tr>
+            <tr><td><code>toolbar.openCustom(name)</code> / <code>toolbar.openCode()</code></td><td>用代码打开自定义面板 / 代码块语言面板</td></tr>
+            <tr><td><code>toolbar.buttonNodes()</code></td><td>当前工具栏按钮节点（按视觉顺序，不含分隔符）</td></tr>
+            <tr><td><code>setPaper({width?, mode?, gap?, maxWidth?})</code> / <code>paperOptions()</code></td><td>运行时改版心（宽屏留白策略）</td></tr>
+            <tr><td><code>setHeight(px \| 0 \| 'auto')</code> / <code>heightOptions()</code></td><td>运行时切换内容区高度（固定 / 自适应），<code>{height, auto}</code></td></tr>
+            <tr><td><code>on(type, fn)</code> / <code>off(type, fn)</code></td><td>事件订阅，返回取消函数</td></tr>
+            <tr><td><code>destroy()</code></td><td>卸载实例、清理监听与临时 URL</td></tr>
+          </tbody>
+        </table>
+      </div>
+
+      <!-- ------------------------------------------------------------ -->
+      <h2 id="events">事件</h2>
+
+      <div class="table-wrap">
+        <table class="data">
+          <thead>
+            <tr><th>事件</th><th>载荷</th><th>触发时机</th></tr>
+          </thead>
+          <tbody>
+            <tr><td><code>ready</code></td><td><code>{editor}</code></td><td>实例挂载完成</td></tr>
+            <tr><td><code>change</code></td><td><code>{html, text}</code></td><td>内容变化</td></tr>
+            <tr><td><code>focus</code> / <code>blur</code></td><td>—</td><td>编辑区聚焦 / 失焦</td></tr>
+            <tr><td><code>save</code></td><td><code>{html}</code></td><td>⌘/Ctrl + S</td></tr>
+            <tr><td><code>uploadstart</code></td><td><code>{file, kind}</code></td><td>开始上传</td></tr>
+            <tr><td><code>uploaddone</code></td><td><code>{file, kind, url}</code></td><td>上传完成</td></tr>
+            <tr><td><code>uploaderror</code></td><td><code>{file, kind, error}</code></td><td>失败（已重试后）</td></tr>
+            <tr><td><code>uploadcancel</code></td><td><code>{file, kind}</code></td><td>取消</td></tr>
+            <tr><td><code>insertmedia</code></td><td><code>{kind, url, node}</code></td><td>通过「网络链接」页签插入图片/视频</td></tr>
+            <tr><td><code>sourcechange</code></td><td><code>{mode: 'source'\|'visual'}</code></td><td>源码模式切换</td></tr>
+            <tr><td><code>customselect</code></td><td><code>{name, item, link, action, editor}</code></td><td>自定义下拉按钮选中一项；<code>action</code> 为 <code>'link'\|'html'\|'text'\|'open'\|'none'</code></td></tr>
+            <tr><td><code>customclick</code></td><td><code>{name, editor}</code></td><td><code>type:'button'</code> 自定义按钮被点击</td></tr>
+            <tr><td><code>markdownimport</code></td><td><code>{mode, name, summary, chars}</code></td><td>Markdown 导入成功（<code>mode</code> 为实际落点，<code>name</code> 为文件名/空串）</td></tr>
+            <tr><td><code>error</code></td><td><code>{type, error, message}</code></td><td>内部异常（如自定义按钮 <code>onSelect</code> 抛错），同时走 <code>onError</code></td></tr>
+          </tbody>
+        </table>
+      </div>
+
+      <!-- ------------------------------------------------------------ -->
+      <h2 id="commands">指令集 commands</h2>
+
+      <div class="code-block">
+        <div class="code-block__head">
+          <span>程序化调用</span>
+          <button class="copy-btn" type="button">复制</button>
+        </div>
+<pre><code>editor.commands.toggleMark('bold' | 'italic' | 'underline' | 'strike')
+editor.commands.setFontSize(18)
+editor.commands.setColor('fore' | 'back', '#07c160')   // color = null 恢复默认
+editor.commands.setAlign('left' | 'center' | 'right' | 'justify')
+editor.commands.toggleList('ordered' | 'unordered')
+editor.commands.setHeading('p' | 'h1' | 'h2' | 'h3')
+editor.commands.toggleBlockquote()
+editor.commands.createLink({ url, text, target })
+editor.commands.removeLink()
+editor.commands.insertTable(3, 2)                      // 列, 行
+editor.commands.insertCodeBlock('const a = 1', 'js')   // 第二参为语言（可省）
+editor.commands.setCodeLanguage('python')              // 改写光标所在块语言
+editor.commands.currentCodeLang()                      // 光标所在块语言（'' = 不在块内）
+editor.commands.insertDivider()
+editor.commands.insertHTML('&lt;p&gt;富文本片段&lt;/p&gt;')
+editor.commands.clearFormat()
+
+editor.getState()   // 当前选区状态（工具栏高亮用）</code></pre>
+      </div>
+
+      <!-- ------------------------------------------------------------ -->
+      <h2 id="utils">独立可用的工具函数</h2>
+
+      <div class="code-block">
+        <div class="code-block__head">
+          <span>按需导入</span>
+          <button class="copy-btn" type="button">复制</button>
+        </div>
+<pre><code>import {
+  sanitizeHtml, formatHtml, escapeHtml, isSafeUrl, cleanWordHtml,
+  mockAdapter, httpAdapter, simpleAdapter, ChunkUploader,
+} from 'kyle-editor'
+
+import {
+  highlightCode, listLanguages, normalizeLang, languageLabel, isCodeBlock, LANGUAGES,
+} from 'kyle-editor'
+
+sanitizeHtml(dirtyHtml)      // 白名单净化，返回安全 HTML
+formatHtml(html)             // 缩进美化（编辑器源码模式同款）
+cleanWordHtml(wordHtml)      // 粘贴前的 Word/WPS 清洗
+isSafeUrl('javascript:1')    // =&gt; false
+
+highlightCode('const a = 1', 'js')
+// =&gt; '&lt;span class="ke-tok-kw"&gt;const&lt;/span&gt; a &lt;span class="ke-tok-op"&gt;=&lt;/span&gt; …'（已转义）
+
+listLanguages(['js', 'mysql'])   // =&gt; [{ value:'javascript', … }, { value:'sql', … }]
+normalizeLang('MySQL')           // =&gt; 'sql'（未知语言 =&gt; 'plaintext'）
+languageLabel('js')              // =&gt; 'JavaScript'
+isCodeBlock(preElement)          // =&gt; true（&lt;pre&gt; 且带 data-k-lang 或内含 &lt;code&gt;）</code></pre>
+      </div>
+
+      <h3>UMD / 默认导出上的静态成员</h3>
+
+      <p><code>&lt;script&gt;</code> 引入时直接可用：</p>
+
+      <div class="code-block">
+        <div class="code-block__head">
+          <span>window.KEditor</span>
+          <button class="copy-btn" type="button">复制</button>
+        </div>
+<pre><code>KEditor.version                 // '1.0.8'
+KEditor.create(el, options)    // 工厂方法，等价于 new KEditor(...)
+
+// 净化 / 格式化
+KEditor.sanitizeHtml(html)
+KEditor.formatHtml(html)
+KEditor.cleanWordHtml(html)
+
+// 上传适配器
+KEditor.mockAdapter({speed})                 // 分片 put() + 整包 upload() 都支持
+KEditor.httpAdapter(config)                  // 真实后端适配器（只认一个 url）
+KEditor.simpleAdapter(fn)                    // 把「一个文件一次请求」包成普通上传适配器
+KEditor.createSimpleUploader(option, uploadOptions)  // 造一个 SimpleUploader
+KEditor.createChunkUploader(option, uploadOptions)   // 造一个 ChunkUploader
+KEditor.SimpleUploader / KEditor.ChunkUploader / KEditor.UploadPipeline
+
+// 代码高亮
+KEditor.highlightCode(code, lang)
+KEditor.listLanguages(only?)
+KEditor.normalizeLang / KEditor.languageLabel / KEditor.isCodeBlock
+KEditor.LANGUAGES                // 全部内置语言（value/label/aliases/hint）
+
+// Markdown
+KEditor.markdownToHtml / KEditor.markdownSummary
+KEditor.isMarkdownFile / KEditor.readMarkdownFile
+KEditor.normalizeInsertMode / KEditor.MARKDOWN_ACCEPT
+
+KEditor.utils                    // { uid, escapeHtml }
+KEditor.plugin                   // Vue 3 插件（仅 keditor-vue.umd.js）</code></pre>
+      </div>
+
+      <!-- ------------------------------------------------------------ -->
+      <h2 id="typescript">TypeScript</h2>
+
+      <p>包内自带 <code>types/index.d.ts</code> 与 <code>types/vue.d.ts</code>，<code>import KEditor from 'kyle-editor'</code> 即有完整提示，<strong>无需额外安装 <code>@types</code></strong>。</p>
+
+      <div class="code-block">
+        <div class="code-block__head">
+          <span>类型直接可用</span>
+          <button class="copy-btn" type="button">复制</button>
+        </div>
+<pre><code>import KEditor, { type KEditorOptions, type KEditorInstance } from 'kyle-editor'
+
+const options: KEditorOptions = {
+  placeholder: '开始撰写内容…',
+  height: 0,
+}
+
+const editor: KEditorInstance = KEditor.create('#editor', options)
+editor.on('change', ({ html }) =&gt; console.log(html))</code></pre>
+      </div>
+
+      <!-- ------------------------------------------------------------ -->
+      <h2 id="security">安全说明</h2>
+
+      <ul>
+        <li>所有进入编辑器的外部 HTML（<code>value</code>、<code>setContent</code>、粘贴）都会经过 <code>sanitizeHtml</code>：<strong>标签 / 属性双白名单</strong>、<code>on*</code> 事件属性剔除、<code>javascript:</code> / <code>vbscript:</code> / <code>file:</code> / 非法 <code>data:</code> 协议拦截、<code>style</code> 声明逐条过滤（丢弃 <code>expression</code>、<code>behavior</code> 等）。</li>
+        <li>Markdown 转换产物在最后一步同样走一遍白名单净化，<code>&lt;script&gt;</code> 会被清掉或转义。</li>
+        <li>自定义按钮的跳转地址经白名单校验，危险协议不生成链接（退化为插入纯文本）。</li>
+      </ul>
+
+      <div class="callout callout--danger">
+        <svg class="callout__icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="9"></circle><path d="M12 7.5v5M12 16h.01"></path></svg>
+        <p><code>getHTML({clean: false})</code> 会返回含编辑器内部属性的原始 HTML，请仅在调试时使用；入库前建议再跑一次 <code>sanitizeHtml</code>。</p>
+      </div>
+
+      <div class="doc-pager">
+        <a href="guide.html">
+          <span class="doc-pager__dir">← 上一页</span>
+          <span class="doc-pager__name">快速上手</span>
+        </a>
+        <a class="doc-pager__next" href="playground.html">
+          <span class="doc-pager__dir">下一页 →</span>
+          <span class="doc-pager__name">在线试用</span>
+        </a>
+      </div>
+
+    </article>
+
+    <aside class="doc-outline" id="doc-outline" aria-label="本页目录"></aside>
+
+  </div>
+</div>
+
+<footer class="site-footer">
+  <div class="container">
+    <div class="site-footer__grid">
+      <div class="site-footer__brand">
+        <a class="brand" href="index.html">
+          <svg class="brand__logo" viewBox="0 0 32 32" aria-hidden="true">
+            <rect width="32" height="32" rx="9" fill="url(#kg)"></rect>
+            <path d="M11 8.5v15M11 16.2l7.2-7.7M11 15.6l7.6 7.9" stroke="#fff" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" fill="none"></path>
+          </svg>
+          KEditor
+        </a>
+        <p>轻量、美观的微信公众号风格富文本编辑器。纯前端，零运行时依赖，MIT 许可。</p>
+      </div>
+
+      <div>
+        <h4>文档</h4>
+        <ul>
+          <li><a href="guide.html">快速上手</a></li>
+          <li><a href="api.html">API 参考</a></li>
+          <li><a href="playground.html">在线试用</a></li>
+        </ul>
+      </div>
+
+      <div>
+        <h4>资源</h4>
+        <ul>
+          <li><a href="https://www.npmjs.com/package/kyle-editor" target="_blank" rel="noopener noreferrer">npm 包</a></li>
+          <li><a href="https://unpkg.com/kyle-editor" target="_blank" rel="noopener noreferrer">CDN 入口</a></li>
+          <li><a href="https://github.com/kyle-xiaoku/kyle-editor" target="_blank" rel="noopener noreferrer">GitHub</a></li>
+          <li><a href="https://gitee.com/xiaokudong/kyle-editor" target="_blank" rel="noopener noreferrer">Gitee</a></li>
+        </ul>
+      </div>
+
+      <div>
+        <h4>相关</h4>
+        <ul>
+          <li><a href="guide.html#markdown">Markdown 导入</a></li>
+          <li><a href="guide.html#upload">上传配置</a></li>
+          <li><a href="api.html#custom-buttons">自定义按钮</a></li>
+          <li><a href="api.html#security">安全说明</a></li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="site-footer__bottom">
+      <span>MIT License © 2026 KEditor</span>
+      <span>版本 v1.0.8 · 样式随 JS 注入，无需引入 CSS</span>
+    </div>
+  </div>
+</footer>
+
+<script src="assets/js/site.js" defer></script>
+</body>
+</html>
