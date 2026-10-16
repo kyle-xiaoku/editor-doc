@@ -270,8 +270,6 @@
 
 .doc-body p code,
 .doc-body li code,
-.doc-body td code,
-.doc-body th code,
 .doc-body h3 code,
 .doc-body h4 code {
   padding: 2px 6px;
@@ -280,7 +278,22 @@
   background: var(--brand-soft);
   border: 1px solid var(--brand-line);
   border-radius: 5px;
+  /* 正文里的长 token（如 ke-tok-{kw,str,...}）必须能断行，
+     否则会把整页撑出横向滚动条 */
   overflow-wrap: anywhere;
+}
+
+/* 表格单元格里的 code 反而要保持不断行：一行断成 onCh/ange 很难看。
+   放不下时让 .table-wrap 自己去滚，这才是表格该有的响应式行为。 */
+.doc-body td code,
+.doc-body th code {
+  padding: 2px 6px;
+  font-size: 0.87em;
+  color: #0a5c33;
+  background: var(--brand-soft);
+  border: 1px solid var(--brand-line);
+  border-radius: 5px;
+  white-space: nowrap;
 }
 
 .doc-body strong { color: var(--ink); font-weight: 700; }
